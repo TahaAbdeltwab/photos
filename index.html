@@ -2,107 +2,276 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="صور المنتجات">
-<meta name="theme-color" content="#0f172a">
-<title>صور المنتجات</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="استوديو المنتجات">
+<meta name="theme-color" content="#080d19">
+<title>استوديو المنتجات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
+  :root{--bg:#080d19;--s1:#101828;--s2:#162036;--line:#223048;--tx:#eef3fc;--mu:#8b9bb8;--br:#3b82f6;--br2:#22d3ee;--ok:#16a34a;--wn:#f59e0b;--er:#ef4444;--r:18px}
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-  html,body{margin:0;background:#0f172a;color:#e5e7eb;font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
-  .app{max-width:560px;margin:0 auto;padding:16px 14px calc(40px + env(safe-area-inset-bottom))}
-  h1{font-size:20px;margin:6px 0 14px;text-align:center}
-  .card{background:#1e293b;border-radius:16px;padding:14px;margin-bottom:12px}
-  .row{display:flex;gap:10px}
-  .row>*{flex:1}
-  .btn{appearance:none;border:0;border-radius:12px;padding:14px 10px;font-size:16px;font-weight:600;background:#334155;color:#fff;cursor:pointer}
-  .btn:active{transform:scale(.98)}
-  .btn.primary{background:#2563eb}
-  .btn.green{background:#16a34a}
-  .btn.small{padding:10px;font-size:14px}
-  .stage{position:relative;background:#fff;border-radius:12px;overflow:hidden;line-height:0}
-  .stage canvas{width:100%;height:auto;display:block}
-  .busy{position:absolute;inset:0;background:rgba(15,23,42,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;line-height:1.5;text-align:center;padding:20px}
-  .busy[hidden]{display:none}
-  .spin{width:38px;height:38px;border:4px solid #475569;border-top-color:#60a5fa;border-radius:50%;animation:sp 1s linear infinite}
-  @keyframes sp{to{transform:rotate(360deg)}}
-  label{display:block;font-size:14px;color:#cbd5e1;margin:10px 0 6px}
-  input[type=text]{width:100%;padding:14px;border-radius:12px;border:2px solid #334155;background:#0f172a;color:#fff;font-size:20px;direction:ltr;text-align:center;letter-spacing:1px}
-  input[type=text]:focus{outline:none;border-color:#2563eb}
-  input[type=range]{width:100%}
-  .chk{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:15px}
-  .fname{margin-top:10px;padding:10px;border-radius:10px;background:#0f172a;text-align:center;font-size:15px;direction:ltr;color:#93c5fd;min-height:40px}
-  .fname.warn{color:#fbbf24}
-  .msg{margin-top:10px;font-size:14px;text-align:center;color:#86efac;min-height:20px}
-  .msg.err{color:#fca5a5}
+  html,body{margin:0;background:var(--bg);color:var(--tx);font-family:"Cairo",-apple-system,"Segoe UI",Tahoma,sans-serif;-webkit-text-size-adjust:100%}
+  body{padding-bottom:calc(120px + env(safe-area-inset-bottom))}
   [hidden]{display:none!important}
-  #scanner{position:fixed;inset:0;background:#000;z-index:50;display:none;flex-direction:column}
-  #scanner.on{display:flex}
-  #scanner video{flex:1;width:100%;object-fit:cover;min-height:0}
-  .frame{position:absolute;left:10%;right:10%;top:30%;height:22%;border:3px solid #22c55e;border-radius:14px;box-shadow:0 0 0 9999px rgba(0,0,0,.35);pointer-events:none}
-  .stxt{position:absolute;top:calc(env(safe-area-inset-top) + 20px);left:0;right:0;text-align:center;color:#fff;font-size:16px;text-shadow:0 1px 4px #000}
-  #scanner .btn{margin:14px;background:#dc2626}
+  button{font:inherit;color:inherit}
+  .ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  header{position:sticky;top:0;z-index:20;background:rgba(8,13,25,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+  .hbar{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:10px;padding:10px 14px}
+  .logo{width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,var(--br),var(--br2));display:grid;place-items:center;color:#fff;box-shadow:0 6px 18px rgba(59,130,246,.35)}
+  .ttl{flex:1;line-height:1.25}.ttl b{display:block;font-size:17px;font-weight:800}.ttl span{font-size:12px;color:var(--mu)}
+  .chip{display:flex;align-items:center;gap:6px;background:var(--s2);border:1px solid var(--line);color:var(--tx);text-decoration:none;border-radius:999px;padding:7px 12px;font-weight:700;font-size:14px}
+  .wrap{max-width:560px;margin:0 auto;padding:0 14px}
+  .card{background:var(--s1);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-top:14px;scroll-margin-top:76px}
+  .sec-t{font-size:13px;font-weight:700;color:var(--mu);margin:2px 0 10px;letter-spacing:.2px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .btn{appearance:none;border:1px solid var(--line);background:var(--s2);border-radius:14px;padding:13px 10px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:transform .08s}
+  .btn:active{transform:scale(.97)}
+  .btn:disabled{opacity:.45;cursor:not-allowed}
+  .btn.pri{background:linear-gradient(135deg,var(--br),#2563eb);border-color:transparent;color:#fff}
+  .btn.ok{background:linear-gradient(135deg,#22c55e,var(--ok));border-color:transparent;color:#fff}
+  .btn.big{padding:16px 12px;font-size:16.5px;border-radius:16px}
+  .btn.sm{padding:9px 12px;font-size:13.5px;border-radius:12px}
+  .cta{width:100%;appearance:none;border:0;border-radius:18px;padding:16px;display:flex;align-items:center;gap:14px;cursor:pointer;color:#fff;text-align:right;background:linear-gradient(135deg,#2563eb 0%,#3b82f6 45%,#22d3ee 130%);box-shadow:0 10px 26px rgba(37,99,235,.35)}
+  .cta:active{transform:scale(.98)}
+  .cta-ic{width:50px;height:50px;border-radius:15px;background:rgba(255,255,255,.18);display:grid;place-items:center}
+  .cta-ic .ic{width:26px;height:26px}
+  .cta-t b{display:block;font-size:18px;font-weight:800}.cta-t small{font-size:12.5px;opacity:.9}
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:15px;padding:5px}
+  .seg button{appearance:none;border:0;background:transparent;color:var(--mu);border-radius:11px;padding:9px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.25}
+  .seg button b{font-size:15px;color:var(--tx)}.seg button small{font-size:11.5px}
+  .seg button.on{background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(34,211,238,.16));box-shadow:inset 0 0 0 1px rgba(59,130,246,.7)}
+  .hint{font-size:12.5px;color:var(--mu);margin:10px 2px 0;line-height:1.6}
+  .pill{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:7px 12px;border-radius:999px;font-size:12.5px;background:var(--s2);border:1px solid var(--line);color:var(--mu)}
+  .pill.ok{color:#86efac;border-color:rgba(34,197,94,.4)}
+  .pill.err{color:#fbbf24;border-color:rgba(245,158,11,.4)}
+  .stage{position:relative;background:#fff;border-radius:14px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 0 0 1px var(--line)}
+  .stage canvas{position:absolute;inset:0;width:100%;height:100%}
+  .proc{position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:8px;background:rgba(8,13,25,.86);color:#fff;border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:600;max-width:calc(100% - 20px)}
+  .spin{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.25);border-top-color:var(--br2);border-radius:50%;animation:sp .8s linear infinite;flex:none}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+  .sw{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--tx);cursor:pointer}
+  .sw input{width:20px;height:20px;accent-color:var(--br)}
+  .slide{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:14px}
+  .slide span{color:var(--mu);width:54px}.slide em{font-style:normal;width:48px;text-align:left;color:var(--tx);font-weight:700}
+  .slide input{flex:1;accent-color:var(--br)}
+  input[type=text]{width:100%;padding:15px;border-radius:14px;border:2px solid var(--line);background:var(--bg);color:#fff;font-size:24px;font-weight:700;direction:ltr;text-align:center;letter-spacing:1.5px;font-family:inherit}
+  input[type=text]:focus{outline:none;border-color:var(--br)}
+  .fname{margin-top:12px;padding:11px;border-radius:12px;background:var(--bg);border:1px dashed var(--line);text-align:center;font-size:15px;direction:ltr;color:#93c5fd;font-weight:600;min-height:44px}
+  .fname.warn{color:#fbbf24}
+  .savebar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 62%,rgba(8,13,25,0))}
+  .savein{max-width:560px;margin:0 auto;display:grid;grid-template-columns:1fr 54px;gap:10px}
+  .badge{display:inline-block;background:var(--br);color:#fff;border-radius:999px;padding:1px 9px;font-size:12px;margin-right:6px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .thumb{position:relative;border-radius:12px;overflow:hidden;background:#fff;aspect-ratio:1/1;border:1px solid var(--line)}
+  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb span{position:absolute;left:0;right:0;bottom:0;background:rgba(8,13,25,.8);color:#fff;font-size:11px;text-align:center;padding:3px 2px;direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .thumb button{position:absolute;top:5px;right:5px;width:26px;height:26px;border-radius:50%;border:0;background:rgba(8,13,25,.8);color:#fff;display:grid;place-items:center;cursor:pointer;padding:0}
+  .thumb button .ic{width:14px;height:14px}
+  .empty{color:var(--mu);font-size:14px;text-align:center;padding:18px 6px}
+  .link{appearance:none;background:none;border:0;color:var(--mu);font-size:13px;text-decoration:underline;cursor:pointer;margin-top:12px;padding:6px}
+  .link.danger{color:#fca5a5}
+  .folder{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;font-size:13.5px}
+  .folder .nm{flex:1;color:var(--mu)}
+  .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#0f1b33;color:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 16px;font-size:14px;font-weight:600;z-index:200;opacity:0;pointer-events:none;transition:all .22s;max-width:calc(100% - 28px);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  .toast.err{border-color:rgba(239,68,68,.6);color:#fecaca}
+  .overlay{position:fixed;inset:0;background:#000;z-index:100;display:none;flex-direction:column;-webkit-user-select:none;user-select:none}
+  .overlay.on{display:flex}
+  .ov-top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;gap:10px;padding:calc(12px + env(safe-area-inset-top)) 14px 12px}
+  .icon-btn{width:44px;height:44px;border-radius:50%;border:0;background:rgba(20,28,46,.78);color:#fff;display:grid;place-items:center;cursor:pointer;flex:none;padding:0}
+  .icon-btn.on{background:#fbbf24;color:#000}
+  .ov-hint{flex:1;text-align:center;background:rgba(20,28,46,.78);color:#fff;border-radius:999px;padding:9px 14px;font-size:13.5px;font-weight:600}
+  .ov-hint.good{background:rgba(22,163,74,.9)}
+  .cam-stage{flex:1;display:flex;align-items:center;justify-content:center;min-height:0}
+  .cam-wrap{position:relative;overflow:hidden;background:#111}
+  .cam-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .det{position:absolute;border:2.5px solid var(--br2);border-radius:12px;box-shadow:0 0 0 200vmax rgba(0,0,0,.52);transition:left .1s linear,top .1s linear,width .1s linear,height .1s linear;pointer-events:none}
+  .ov-bottom{padding:18px 14px calc(22px + env(safe-area-inset-bottom));display:flex;justify-content:center;align-items:center;gap:16px}
+  .shutter{width:76px;height:76px;border-radius:50%;border:4px solid #fff;background:transparent;padding:5px;cursor:pointer}
+  .shutter span{display:block;width:100%;height:100%;border-radius:50%;background:#fff}
+  .shutter:active span{transform:scale(.88)}
+  #scan video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .sframe{position:absolute;left:5%;right:5%;top:34%;height:30%;border:2.5px solid rgba(255,255,255,.9);border-radius:16px;box-shadow:0 0 0 200vmax rgba(0,0,0,.55);pointer-events:none}
+  .sline{position:absolute;left:8px;right:8px;top:50%;height:2px;background:#ef4444;box-shadow:0 0 10px #ef4444;animation:sl 1.6s ease-in-out infinite alternate}
+  @keyframes sl{from{top:14%}to{top:86%}}
+  #scan .ov-bottom{position:absolute;left:0;right:0;bottom:0;flex-direction:column;background:linear-gradient(to top,rgba(0,0,0,.75),rgba(0,0,0,0))}
+  #scan .btn{background:rgba(255,255,255,.14);color:#fff;border-color:rgba(255,255,255,.25);width:100%;max-width:420px}
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js"></script>
 </head>
 <body>
-<div class="app">
-  <h1>📸 صور المنتجات</h1>
 
-  <div class="card">
-    <div class="row">
-      <button class="btn primary" id="btnCam">📷 صوّر المنتج</button>
-      <button class="btn" id="btnGal">🖼️ من المعرض</button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <symbol id="i-cam" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></symbol>
+  <symbol id="i-img" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></symbol>
+  <symbol id="i-bar" viewBox="0 0 24 24"><path d="M3 5v14M6 5v14M10 5v14M13 5v14M17 5v14M21 5v14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
+</defs></svg>
+
+<header><div class="hbar">
+  <div class="logo"><svg class="ic"><use href="#i-cam"/></svg></div>
+  <div class="ttl"><b>استوديو المنتجات</b><span>صوّر · نضّف · احفظ بكود المنتج</span></div>
+  <a class="chip" href="#library"><svg class="ic"><use href="#i-img"/></svg><span id="hdrCount">0</span></a>
+</div></header>
+
+<main class="wrap">
+
+  <section class="card" id="home">
+    <button class="cta" id="btnSmart">
+      <span class="cta-ic"><svg class="ic"><use href="#i-cam"/></svg></span>
+      <span class="cta-t"><b>الكاميرا الذكية</b><small>بتحدد المنتج وتقصّه وإنت بتصوّر</small></span>
+    </button>
+    <div class="row2">
+      <button class="btn" id="btnCam"><svg class="ic"><use href="#i-cam"/></svg>كاميرا الموبايل</button>
+      <button class="btn" id="btnGal"><svg class="ic"><use href="#i-img"/></svg>من المعرض</button>
     </div>
     <input type="file" id="fileCam" accept="image/*" capture="environment" hidden>
     <input type="file" id="fileGal" accept="image/*" hidden>
-  </div>
 
-  <div class="card" id="previewCard" hidden>
+    <div class="sec-t" style="margin-top:18px">طريقة تنضيف الخلفية</div>
+    <div class="seg" id="seg">
+      <button data-m="ai"><b>دقيق</b><small>ذكاء اصطناعي</small></button>
+      <button data-m="fast"><b>سريع</b><small>لحظي</small></button>
+    </div>
+    <p class="hint" id="modeHint"></p>
+    <div class="pill" id="aiPill" hidden></div>
+  </section>
+
+  <section class="card" id="editor" hidden>
     <div class="stage">
-      <canvas id="out"></canvas>
-      <div class="busy" id="busy" hidden><div class="spin"></div><div id="busyTxt">جاري التجهيز…</div></div>
+      <canvas id="out" width="4" height="4"></canvas>
+      <div class="proc" id="proc" hidden><i class="spin"></i><span id="procTxt"></span></div>
     </div>
-    <div class="row" style="margin-top:10px">
-      <button class="btn small" id="btnCompare">👁️ اضغط مطوّلاً لرؤية الأصلي</button>
+    <div class="tools">
+      <button class="btn sm" id="btnCompare">اضغط مطوّلاً لرؤية الأصلي</button>
+      <label class="sw"><input type="checkbox" id="shadow" checked><span>ظل خفيف</span></label>
     </div>
-    <label for="light">الإضاءة: <span id="lightVal">تلقائي</span></label>
-    <input type="range" id="light" min="-40" max="40" value="0">
-    <label class="chk"><input type="checkbox" id="shadow" checked> ظل خفيف تحت المنتج</label>
-  </div>
+    <div class="slide"><span>الإضاءة</span><input type="range" id="light" min="-40" max="40" value="0"><em id="lightVal">تلقائي</em></div>
+  </section>
 
-  <div class="card" id="saveCard" hidden>
-    <label for="bc">الباركود (مثال: 38-4521)</label>
-    <input type="text" id="bc" placeholder="38-xxxx" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <div class="row" style="margin-top:10px">
-      <button class="btn" id="btnScan">📷 امسح الباركود</button>
+  <section class="card" id="bcCard" hidden>
+    <div class="sec-t">باركود المنتج (مثال: 38-4521)</div>
+    <input type="text" id="bc" placeholder="38-0000" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <div class="row2">
+      <button class="btn" id="btnScan"><svg class="ic"><use href="#i-bar"/></svg>امسح بالكاميرا</button>
+      <button class="btn" id="btnScanPhoto"><svg class="ic"><use href="#i-cam"/></svg>صوّر الباركود</button>
     </div>
+    <input type="file" id="bcPhoto" accept="image/*" capture="environment" hidden>
     <div class="fname" id="fname">اكتب أو امسح الباركود</div>
-    <div class="row" style="margin-top:12px">
-      <button class="btn green" id="btnShare">💾 حفظ / مشاركة</button>
-      <button class="btn" id="btnDl">⬇️ تنزيل</button>
+  </section>
+
+  <section class="card" id="library">
+    <div class="sec-t" style="display:flex;align-items:center">المكتبة<span class="badge" id="libCount">0</span></div>
+    <div class="empty" id="libEmpty">لسه مفيش صور. أول ما تحفظ أي منتج هيظهر هنا.</div>
+    <div class="grid" id="libGrid"></div>
+    <div id="libActions" hidden style="margin-top:14px">
+      <button class="btn pri big" id="btnZip" style="width:100%"><svg class="ic"><use href="#i-dl"/></svg>تنزيل الكل ZIP (فولدر صور المنتجات)</button>
+      <div class="row2">
+        <button class="btn" id="btnAllFiles"><svg class="ic"><use href="#i-share"/></svg>حفظ الكل في الملفات</button>
+        <button class="btn" id="btnClear"><svg class="ic"><use href="#i-x"/></svg>مسح المكتبة</button>
+      </div>
+      <p class="hint">على الأيفون: اختار «حفظ في الملفات» وبعدين اعمل أو اختار فولدر «صور المنتجات». المرة الجاية هيفتح على نفس الفولدر. الـ ZIP لما تفتحه من تطبيق الملفات بيطلّع فولدر «صور المنتجات» جاهز.</p>
     </div>
-    <div class="msg" id="msg"></div>
+    <div class="folder" id="folderRow" hidden>
+      <svg class="ic"><use href="#i-folder"/></svg>
+      <span class="nm" id="folderName">مفيش فولدر مختار</span>
+      <button class="btn sm" id="btnFolder">اختيار فولدر</button>
+    </div>
+  </section>
+</main>
+
+<div class="savebar" id="saveBar" hidden><div class="savein">
+  <button class="btn ok big" id="btnSave" disabled><svg class="ic"><use href="#i-check"/></svg><span id="saveTxt">—</span></button>
+  <button class="btn big" id="btnCancel" aria-label="إلغاء" style="padding:0"><svg class="ic"><use href="#i-x"/></svg></button>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<!-- كاميرا ذكية -->
+<div class="overlay" id="cam">
+  <div class="ov-top">
+    <button class="icon-btn" id="camClose" aria-label="إغلاق"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div class="ov-hint" id="camHint">جاري تشغيل الكاميرا…</div>
+    <button class="icon-btn" id="camTorch" aria-label="فلاش" hidden><svg class="ic"><use href="#i-bolt"/></svg></button>
   </div>
+  <div class="cam-stage" id="camStage">
+    <div class="cam-wrap" id="camWrap">
+      <video id="camVideo" autoplay muted playsinline></video>
+      <div class="det" id="camBox" hidden></div>
+    </div>
+  </div>
+  <div class="ov-bottom"><button class="shutter" id="shutter" aria-label="تصوير"><span></span></button></div>
 </div>
 
-<div id="scanner">
-  <video id="video" playsinline muted></video>
-  <div class="frame"></div>
-  <div class="stxt">وجّه الكاميرا ناحية الباركود</div>
-  <button class="btn" id="btnCloseScan">إلغاء</button>
+<!-- ماسح الباركود -->
+<div class="overlay" id="scan">
+  <video id="scanVideo" autoplay muted playsinline></video>
+  <div class="sframe"><div class="sline"></div></div>
+  <div class="ov-top">
+    <button class="icon-btn" id="scanClose" aria-label="إغلاق"><svg class="ic"><use href="#i-x"/></svg></button>
+    <div class="ov-hint" id="scanHint">جاري تشغيل الكاميرا…</div>
+    <button class="icon-btn" id="scanTorch" aria-label="فلاش" hidden><svg class="ic"><use href="#i-bolt"/></svg></button>
+  </div>
+  <div class="ov-bottom">
+    <button class="btn big" id="scanPhotoBtn"><svg class="ic"><use href="#i-cam"/></svg>صوّر الباركود بدقة أعلى</button>
+  </div>
 </div>
 
 <script>
 const $ = id => document.getElementById(id);
-const state = { base:null, cut:null, orig:null };
+const ST = { base:null, orig:null, cut:null, flat:null, ready:false };
+const settings = { mode: (function(){ try { return localStorage.getItem('mode') || 'ai'; } catch (e) { return 'ai'; } })() };
 const resultCanvas = document.createElement('canvas');
-let blobOut = null;
-let removeBgFn = null;
-let renderTimer = null;
+const ai = { state:'idle', pct:0, noGpu:false };
+let library = [], dirHandle = null, job = 0, renderTimer = null, libUrls = [];
 
-/* ---------- أدوات صور ---------- */
+/* ================= أدوات عامة ================= */
+let toastT;
+function toast(msg, err){
+  const t = $('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (err ? ' err' : '');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => { t.className = 'toast'; }, err ? 4200 : 2600);
+}
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+/* ================= تخزين المكتبة (IndexedDB) ================= */
+const DB = {
+  db:null,
+  open(){
+    return new Promise((res, rej) => {
+      if (!window.indexedDB){ rej(new Error('no idb')); return; }
+      const r = indexedDB.open('prodstudio', 1);
+      r.onupgradeneeded = () => {
+        r.result.createObjectStore('photos', { keyPath:'name' });
+        r.result.createObjectStore('kv');
+      };
+      r.onsuccess = () => { this.db = r.result; res(); };
+      r.onerror = () => rej(r.error);
+    });
+  },
+  rq(r){ return new Promise((res, rej) => { r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); },
+  st(name, mode){ return this.db.transaction(name, mode).objectStore(name); },
+  all(){ return this.db ? this.rq(this.st('photos', 'readonly').getAll()) : Promise.reject(new Error('no db')); },
+  put(item){ return this.db ? this.rq(this.st('photos', 'readwrite').put(item)) : Promise.reject(new Error('no db')); },
+  del(name){ return this.db ? this.rq(this.st('photos', 'readwrite').delete(name)) : Promise.reject(new Error('no db')); },
+  clear(){ return this.db ? this.rq(this.st('photos', 'readwrite').clear()) : Promise.reject(new Error('no db')); },
+  kvGet(k){ return this.db ? this.rq(this.st('kv', 'readonly').get(k)) : Promise.reject(new Error('no db')); },
+  kvSet(k, v){ return this.db ? this.rq(this.st('kv', 'readwrite').put(v, k)) : Promise.reject(new Error('no db')); }
+};
+
+/* ================= أدوات الصور ================= */
 function loadImage(file){
   return new Promise((res, rej) => {
     const url = URL.createObjectURL(file);
@@ -112,40 +281,152 @@ function loadImage(file){
     img.src = url;
   });
 }
-function blobToImage(blob){ return loadImage(blob); }
-function scaledCanvas(img, maxSide){
-  const k = Math.min(1, maxSide / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
-  const w = Math.round((img.naturalWidth || img.width) * k);
-  const h = Math.round((img.naturalHeight || img.height) * k);
-  const c = document.createElement('canvas'); c.width = w; c.height = h;
-  const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(img, 0, 0, w, h);
+function scaledCanvas(src, maxSide){
+  const sw = src.naturalWidth || src.width, sh = src.naturalHeight || src.height;
+  const k = Math.min(1, maxSide / Math.max(sw, sh));
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, Math.round(sw * k));
+  c.height = Math.max(1, Math.round(sh * k));
+  const x = c.getContext('2d');
+  x.imageSmoothingQuality = 'high';
+  x.drawImage(src, 0, 0, c.width, c.height);
   return c;
 }
-function toBlob(canvas, type, q){
-  return new Promise(res => canvas.toBlob(res, type, q));
+function toBlob(canvas, type, q){ return new Promise(res => canvas.toBlob(res, type, q)); }
+function cropCanvas(src, b, pad){
+  const W = src.width, H = src.height;
+  const px = (b.x1 - b.x0) * W * pad, py = (b.y1 - b.y0) * H * pad;
+  const x0 = Math.max(0, Math.floor(b.x0 * W - px)), y0 = Math.max(0, Math.floor(b.y0 * H - py));
+  const x1 = Math.min(W, Math.ceil(b.x1 * W + px)), y1 = Math.min(H, Math.ceil(b.y1 * H + py));
+  const c = document.createElement('canvas');
+  c.width = Math.max(1, x1 - x0); c.height = Math.max(1, y1 - y0);
+  c.getContext('2d').drawImage(src, x0, y0, c.width, c.height, 0, 0, c.width, c.height);
+  return c;
+}
+function bboxFromCounts(rc, cc, w, h, mr, mc){
+  let y0 = 0; while (y0 < h && rc[y0] < mr) y0++;
+  let y1 = h - 1; while (y1 >= 0 && rc[y1] < mr) y1--;
+  let x0 = 0; while (x0 < w && cc[x0] < mc) x0++;
+  let x1 = w - 1; while (x1 >= 0 && cc[x1] < mc) x1--;
+  if (y1 <= y0 || x1 <= x0) return null;
+  return { x0, y0, x1, y1 };
 }
 function cropToAlpha(src){
   const w = src.width, h = src.height;
-  const x = src.getContext('2d', { willReadFrequently:true });
-  const d = x.getImageData(0, 0, w, h).data;
-  let minX = w, minY = h, maxX = -1, maxY = -1;
+  const d = src.getContext('2d', { willReadFrequently:true }).getImageData(0, 0, w, h).data;
+  const rc = new Uint32Array(h), cc = new Uint32Array(w);
   for (let y = 0; y < h; y++){
-    for (let xx = 0; xx < w; xx++){
-      if (d[(y * w + xx) * 4 + 3] > 16){
-        if (xx < minX) minX = xx; if (xx > maxX) maxX = xx;
-        if (y < minY) minY = y; if (y > maxY) maxY = y;
-      }
+    for (let x = 0; x < w; x++){
+      if (d[(y * w + x) * 4 + 3] > 16){ rc[y]++; cc[x]++; }
     }
   }
-  if (maxX < 0) return null;
-  const cw = maxX - minX + 1, ch = maxY - minY + 1;
-  const c = document.createElement('canvas'); c.width = cw; c.height = ch;
-  c.getContext('2d').drawImage(src, minX, minY, cw, ch, 0, 0, cw, ch);
+  const b = bboxFromCounts(rc, cc, w, h, 1, 1);
+  if (!b) return null;
+  const c = document.createElement('canvas');
+  c.width = b.x1 - b.x0 + 1; c.height = b.y1 - b.y0 + 1;
+  c.getContext('2d').drawImage(src, b.x0, b.y0, c.width, c.height, 0, 0, c.width, c.height);
+  return c;
+}
+function cropWhite(src){
+  const w = src.width, h = src.height;
+  const d = src.getContext('2d', { willReadFrequently:true }).getImageData(0, 0, w, h).data;
+  const rc = new Uint32Array(h), cc = new Uint32Array(w);
+  for (let y = 0; y < h; y++){
+    for (let x = 0; x < w; x++){
+      const i = (y * w + x) * 4;
+      if (d[i] < 235 || d[i + 1] < 235 || d[i + 2] < 235){ rc[y]++; cc[x]++; }
+    }
+  }
+  const b = bboxFromCounts(rc, cc, w, h, Math.max(2, Math.round(w * 0.004)), Math.max(2, Math.round(h * 0.004)));
+  if (!b) return src;
+  const c = document.createElement('canvas');
+  c.width = b.x1 - b.x0 + 1; c.height = b.y1 - b.y0 + 1;
+  c.getContext('2d').drawImage(src, b.x0, b.y0, c.width, c.height, 0, 0, c.width, c.height);
   return c;
 }
 
-/* ---------- تحسين الإضاءة والألوان ---------- */
-function enhance(src, bright){
+/* ================= تحديد المنتج (الفرق عن لون الخلفية) ================= */
+function edgeColors(d, w, h, t){
+  const mk = () => ({ s:[0, 0, 0], n:0 });
+  const T = mk(), B = mk(), L = mk(), R = mk();
+  const add = (o, i) => { o.s[0] += d[i]; o.s[1] += d[i + 1]; o.s[2] += d[i + 2]; o.n++; };
+  for (let y = 0; y < t; y++) for (let x = 0; x < w; x++) add(T, (y * w + x) * 4);
+  for (let y = h - t; y < h; y++) for (let x = 0; x < w; x++) add(B, (y * w + x) * 4);
+  for (let x = 0; x < t; x++) for (let y = 0; y < h; y++) add(L, (y * w + x) * 4);
+  for (let x = w - t; x < w; x++) for (let y = 0; y < h; y++) add(R, (y * w + x) * 4);
+  const f = o => o.s.map(v => v / Math.max(1, o.n));
+  return { t:f(T), b:f(B), l:f(L), r:f(R) };
+}
+const dcv = document.createElement('canvas');
+function detectBoxFrom(src, sw, sh){
+  const thr = 28;
+  const w = 128, h = Math.max(16, Math.round(w * sh / sw));
+  dcv.width = w; dcv.height = h;
+  const x = dcv.getContext('2d', { willReadFrequently:true });
+  x.drawImage(src, 0, 0, w, h);
+  const d = x.getImageData(0, 0, w, h).data;
+  const t = Math.max(3, Math.round(Math.min(w, h) * 0.07));
+  const E = edgeColors(d, w, h, t);
+  const rc = new Uint16Array(h), cc = new Uint16Array(w);
+  for (let y = 0; y < h; y++){
+    const ty = y / (h - 1);
+    for (let xx = 0; xx < w; xx++){
+      const tx = xx / (w - 1), i = (y * w + xx) * 4;
+      let md = 0;
+      for (let k = 0; k < 3; k++){
+        const bg = ((E.l[k] + (E.r[k] - E.l[k]) * tx) + (E.t[k] + (E.b[k] - E.t[k]) * ty)) / 2;
+        const dd = Math.abs(d[i + k] - bg);
+        if (dd > md) md = dd;
+      }
+      if (md > thr){ rc[y]++; cc[xx]++; }
+    }
+  }
+  const b = bboxFromCounts(rc, cc, w, h, Math.max(2, Math.round(w * 0.02)), Math.max(2, Math.round(h * 0.02)));
+  if (!b) return null;
+  const area = ((b.x1 - b.x0 + 1) * (b.y1 - b.y0 + 1)) / (w * h);
+  if (area < 0.04 || area > 0.93) return null;
+  return { x0:b.x0 / w, y0:b.y0 / h, x1:(b.x1 + 1) / w, y1:(b.y1 + 1) / h };
+}
+function autoCrop(canvas){
+  const b = detectBoxFrom(canvas, canvas.width, canvas.height);
+  return b ? cropCanvas(canvas, b, 0.1) : null;
+}
+
+/* ================= الوضع السريع: خلفية بيضاء فورية ================= */
+function flatten(base){
+  const w = base.width, h = base.height;
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const x = c.getContext('2d', { willReadFrequently:true });
+  x.drawImage(base, 0, 0);
+  const id = x.getImageData(0, 0, w, h), d = id.data;
+  const E = edgeColors(d, w, h, Math.max(3, Math.round(Math.min(w, h) * 0.035)));
+  const bgv = [1, 1, 1];
+  for (let y = 0; y < h; y++){
+    const ty = y / (h - 1);
+    for (let xx = 0; xx < w; xx++){
+      const tx = xx / (w - 1), i = (y * w + xx) * 4;
+      let md = 0;
+      for (let k = 0; k < 3; k++){
+        const bg = Math.max(1, ((E.l[k] + (E.r[k] - E.l[k]) * tx) + (E.t[k] + (E.b[k] - E.t[k]) * ty)) / 2);
+        bgv[k] = bg;
+        const dd = Math.abs(d[i + k] - bg);
+        if (dd > md) md = dd;
+      }
+      let s = (md - 12) / 24; s = s < 0 ? 0 : (s > 1 ? 1 : s);
+      const a = s * s * (3 - 2 * s);
+      for (let k = 0; k < 3; k++){
+        const norm = Math.min(255, d[i + k] * 255 / bgv[k]);
+        d[i + k] = 255 + (norm - 255) * a;
+      }
+      d[i + 3] = 255;
+    }
+  }
+  x.putImageData(id, 0, 0);
+  return cropWhite(c);
+}
+
+/* ================= تحسين الإضاءة والألوان ================= */
+function enhance(src, bright, flat){
   const w = src.width, h = src.height;
   const c = document.createElement('canvas'); c.width = w; c.height = h;
   const x = c.getContext('2d', { willReadFrequently:true });
@@ -155,7 +436,7 @@ function enhance(src, bright){
   const hist = new Uint32Array(256);
   let n = 0, sr = 0, sg = 0, sb = 0;
   for (let i = 0; i < d.length; i += 4){
-    if (d[i + 3] > 200){
+    if (d[i + 3] > 200 && !(flat && d[i] > 243 && d[i + 1] > 243 && d[i + 2] > 243)){
       const l = ((d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000) | 0;
       hist[l]++; n++; sr += d[i]; sg += d[i + 1]; sb += d[i + 2];
     }
@@ -180,23 +461,21 @@ function enhance(src, bright){
     lut[i] = Math.round(Math.pow(v, gamma) * 255);
   }
 
-  // توازن أبيض خفيف (نص القوة) عشان الألوان ماتتغيرش بزيادة
   const ar = sr / n, ag = sg / n, ab = sb / n, gray = (ar + ag + ab) / 3;
   const gain = a => 1 + (Math.min(1.12, Math.max(0.88, gray / a)) - 1) * 0.5;
   const gr = gain(ar), gg = gain(ag), gb = gain(ab);
   const sat = 1.1;
 
   for (let i = 0; i < d.length; i += 4){
-    let r = lut[Math.min(255, d[i] * gr) | 0];
-    let g = lut[Math.min(255, d[i + 1] * gg) | 0];
-    let b = lut[Math.min(255, d[i + 2] * gb) | 0];
+    const r = lut[Math.min(255, d[i] * gr) | 0];
+    const g = lut[Math.min(255, d[i + 1] * gg) | 0];
+    const b = lut[Math.min(255, d[i + 2] * gb) | 0];
     const l = 0.299 * r + 0.587 * g + 0.114 * b;
     d[i] = l + (r - l) * sat;
     d[i + 1] = l + (g - l) * sat;
     d[i + 2] = l + (b - l) * sat;
   }
 
-  // حدة خفيفة
   const copy = new Uint8ClampedArray(d);
   const amt = 0.6;
   for (let y = 1; y < h - 1; y++){
@@ -213,24 +492,25 @@ function enhance(src, bright){
   return c;
 }
 
-/* ---------- تركيب الصورة النهائية ---------- */
+/* ================= تركيب الصورة النهائية ================= */
 function render(){
-  if (!state.base) return;
+  if (!ST.base) return;
   const S = 1500;
   resultCanvas.width = S; resultCanvas.height = S;
   const x = resultCanvas.getContext('2d');
   x.imageSmoothingQuality = 'high';
   x.fillStyle = '#ffffff'; x.fillRect(0, 0, S, S);
 
-  const hasCut = !!state.cut;
-  const enh = enhance(hasCut ? state.cut : state.base, +$('light').value);
-  const pad = hasCut ? 0.09 : 0.0;
+  const src = ST.cut || ST.flat || ST.base;
+  const isFlat = !ST.cut && !!ST.flat;
+  const enh = enhance(src, +$('light').value, isFlat);
+  const pad = (ST.cut || ST.flat) ? 0.09 : 0;
   const box = S * (1 - 2 * pad);
   const sc = Math.min(box / enh.width, box / enh.height);
   const w = enh.width * sc, h = enh.height * sc;
   const dx = (S - w) / 2, dy = (S - h) / 2;
 
-  if (hasCut && $('shadow').checked){
+  if (ST.cut && $('shadow').checked){
     x.save();
     x.shadowColor = 'rgba(0,0,0,.22)';
     x.shadowBlur = S * 0.025;
@@ -248,91 +528,193 @@ function showCanvas(src){
   out.getContext('2d').drawImage(src, 0, 0);
 }
 function showOriginal(){
-  if (!state.orig) return;
-  const S = 1500;
+  if (!ST.orig) return;
+  const S = 1200;
   const c = document.createElement('canvas'); c.width = S; c.height = S;
   const x = c.getContext('2d');
   x.fillStyle = '#fff'; x.fillRect(0, 0, S, S);
-  const sc = Math.min(S / state.orig.width, S / state.orig.height);
-  const w = state.orig.width * sc, h = state.orig.height * sc;
-  x.drawImage(state.orig, (S - w) / 2, (S - h) / 2, w, h);
+  const sc = Math.min(S / ST.orig.width, S / ST.orig.height);
+  const w = ST.orig.width * sc, h = ST.orig.height * sc;
+  x.drawImage(ST.orig, (S - w) / 2, (S - h) / 2, w, h);
   showCanvas(c);
 }
 function scheduleRender(){
+  if (!ST.ready) return;
   clearTimeout(renderTimer);
   renderTimer = setTimeout(render, 130);
 }
-
-/* ---------- معالجة الصورة ---------- */
-function setBusy(on, txt){
-  $('busy').hidden = !on;
-  if (txt) $('busyTxt').textContent = txt;
+function setProc(on, txt){
+  $('proc').hidden = !on;
+  if (txt) $('procTxt').textContent = txt;
 }
-async function getRemover(){
-  if (!removeBgFn){
-    const m = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm');
-    removeBgFn = m.removeBackground || m.default;
+
+/* ================= الذكاء الاصطناعي (إزالة الخلفية) ================= */
+let imglyP = null;
+function loadImgly(){
+  if (!imglyP){
+    imglyP = import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.8/+esm')
+      .catch(e => { imglyP = null; throw e; });
   }
-  return removeBgFn;
+  return imglyP;
+}
+function aiConfig(useGpu, onMsg){
+  return {
+    device: useGpu ? 'gpu' : 'cpu',
+    model: useGpu ? 'isnet_fp16' : 'isnet_quint8',
+    output: { format:'image/png' },
+    progress: (key, cur, total) => {
+      key = String(key);
+      if (key.indexOf('fetch') === 0 && total){
+        ai.pct = Math.round(cur / total * 100);
+        setPill();
+        if (onMsg) onMsg('جاري تحميل الذكاء الاصطناعي… ' + ai.pct + '% (مرة واحدة بس)');
+      } else if (onMsg){
+        onMsg('جاري تنضيف الخلفية…');
+      }
+    }
+  };
+}
+async function warmup(){
+  if (settings.mode !== 'ai' || ai.state === 'ready' || ai.state === 'loading') return;
+  ai.state = 'loading'; ai.pct = 0; setPill();
+  try {
+    const m = await loadImgly();
+    const useGpu = !!navigator.gpu && !ai.noGpu;
+    try {
+      if (m.preload) await m.preload(aiConfig(useGpu));
+    } catch (e){
+      if (!useGpu) throw e;
+      ai.noGpu = true;
+      if (m.preload) await m.preload(aiConfig(false));
+    }
+    ai.state = 'ready';
+  } catch (e){
+    console.warn(e);
+    ai.state = 'error';
+  }
+  setPill();
+}
+async function aiCut(base, onMsg){
+  const m = await loadImgly();
+  const rb = m.removeBackground || m.default;
+  const small = scaledCanvas(base, 1024);
+  const inBlob = await toBlob(small, 'image/jpeg', 0.9);
+  let outBlob;
+  const useGpu = !!navigator.gpu && !ai.noGpu;
+  try {
+    outBlob = await rb(inBlob, aiConfig(useGpu, onMsg));
+  } catch (e){
+    if (!useGpu) throw e;
+    ai.noGpu = true;
+    outBlob = await rb(inBlob, aiConfig(false, onMsg));
+  }
+  ai.state = 'ready'; setPill();
+  const mimg = await loadImage(outBlob);
+  const full = document.createElement('canvas'); full.width = base.width; full.height = base.height;
+  const x = full.getContext('2d', { willReadFrequently:true });
+  x.drawImage(base, 0, 0);
+  x.globalCompositeOperation = 'destination-in';
+  x.drawImage(mimg, 0, 0, base.width, base.height);
+  return cropToAlpha(full);
+}
+function setPill(){
+  const p = $('aiPill');
+  if (settings.mode !== 'ai'){ p.hidden = true; return; }
+  p.hidden = false;
+  p.className = 'pill';
+  if (ai.state === 'loading'){
+    p.innerHTML = '<i class="spin"></i><span></span>';
+    p.lastChild.textContent = 'الذكاء الاصطناعي بيتجهّز' + (ai.pct ? ' ' + ai.pct + '%' : '…') + ' (مرة واحدة بس)';
+  } else if (ai.state === 'ready'){
+    p.className = 'pill ok'; p.textContent = 'الذكاء الاصطناعي جاهز ✓';
+  } else if (ai.state === 'error'){
+    p.className = 'pill err'; p.textContent = 'محتاج نت لتجهيز الذكاء الاصطناعي. الوضع السريع شغال.';
+  } else {
+    p.textContent = 'هيتجهّز تلقائياً';
+  }
+}
+function setMode(m, reprocess){
+  settings.mode = m;
+  try { localStorage.setItem('mode', m); } catch (e){}
+  document.querySelectorAll('#seg button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
+  $('modeHint').textContent = m === 'ai'
+    ? 'بيشيل أي خلفية بدقة عالية. بعد أول تجهيز بياخد كام ثانية، وإنت بتكتب الباركود في نفس الوقت.'
+    : 'لحظي وبدون نت. الأفضل تحط المنتج على ورقة بيضاء أو سطح سادة.';
+  if (m === 'ai') warmup();
+  setPill();
+  if (reprocess && ST.base) processPhoto();
+}
+
+/* ================= معالجة الصورة ================= */
+async function processPhoto(){
+  const my = ++job;
+  const mode = settings.mode;
+  ST.cut = null; ST.flat = null; ST.ready = false;
+  $('light').disabled = true;
+  updateSaveBtn();
+  showOriginal();
+  setProc(true, mode === 'ai' ? 'جاري تنضيف الخلفية…' : 'جاري التنضيف…');
+  await sleep(30);
+  if (my !== job) return;
+  try {
+    if (mode === 'fast'){
+      ST.flat = flatten(ST.base);
+    } else {
+      try {
+        const cut = await aiCut(ST.base, msg => { if (my === job) setProc(true, msg); });
+        if (my !== job) return;
+        if (cut) ST.cut = cut; else throw new Error('no subject');
+      } catch (e){
+        console.warn(e);
+        if (my !== job) return;
+        ST.flat = flatten(ST.base);
+        toast('الذكاء الاصطناعي مش متاح دلوقتي. استخدمت الوضع السريع.', true);
+      }
+    }
+    if (my !== job) return;
+    ST.ready = true;
+    $('light').disabled = false;
+    render();
+  } finally {
+    if (my === job){ setProc(false); updateSaveBtn(); }
+  }
+}
+function startEdit(base){
+  ST.base = base; ST.orig = base; ST.cut = null; ST.flat = null; ST.ready = false;
+  $('editor').hidden = false; $('bcCard').hidden = false; $('saveBar').hidden = false;
+  $('bc').value = '';
+  $('light').value = 0; $('lightVal').textContent = 'تلقائي';
+  updateName(); updateSaveBtn();
+  $('editor').scrollIntoView({ behavior:'smooth', block:'start' });
+  processPhoto();
+}
+function resetEditor(){
+  job++;
+  ST.base = ST.orig = ST.cut = ST.flat = null; ST.ready = false;
+  $('editor').hidden = true; $('bcCard').hidden = true; $('saveBar').hidden = true;
+  setProc(false);
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 async function handleFile(file){
   if (!file) return;
-  $('previewCard').hidden = false;
-  $('saveCard').hidden = false;
-  $('bc').value = ''; updateName(); setMsg('');
-  $('light').value = 0; $('lightVal').textContent = 'تلقائي';
-  state.base = null; state.cut = null; blobOut = null;
-  setBusy(true, 'جاري تجهيز الصورة…');
-  $('previewCard').scrollIntoView({ behavior:'smooth', block:'start' });
-
   try {
     const img = await loadImage(file);
-    state.base = scaledCanvas(img, 1600);
-    state.orig = state.base;
-    showOriginal();
-
-    try {
-      setBusy(true, 'تحميل نموذج الذكاء الاصطناعي… (أول مرة بس، ممكن ياخد دقيقة)');
-      const rb = await getRemover();
-      const inBlob = await toBlob(state.base, 'image/jpeg', 0.92);
-      const outBlob = await rb(inBlob, {
-        output: { format:'image/png' },
-        progress: (key, cur, total) => {
-          if (String(key).startsWith('fetch') && total){
-            setBusy(true, 'تحميل نموذج الذكاء الاصطناعي… ' + Math.round(cur / total * 100) + '%');
-          } else {
-            setBusy(true, 'جاري عزل المنتج وتنضيف الخلفية…');
-          }
-        }
-      });
-      const cutImg = await blobToImage(outBlob);
-      const full = document.createElement('canvas');
-      full.width = cutImg.naturalWidth; full.height = cutImg.naturalHeight;
-      full.getContext('2d').drawImage(cutImg, 0, 0);
-      state.cut = cropToAlpha(full);
-      if (!state.cut) setMsg('ماقدرش يحدد المنتج، اتحسنت الصورة بدون إزالة الخلفية.', true);
-    } catch (e){
-      console.error(e);
-      state.cut = null;
-      setMsg('إزالة الخلفية ماشتغلتش (تأكد من النت أول مرة). اتحسنت الإضاءة بس.', true);
-    }
-
-    setBusy(true, 'جاري تحسين الإضاءة…');
-    await new Promise(r => setTimeout(r, 30));
-    render();
+    let c = scaledCanvas(img, 2400);
+    const cropped = autoCrop(c);
+    if (cropped) c = cropped;
+    c = scaledCanvas(c, 1600);
+    startEdit(c);
   } catch (e){
     console.error(e);
-    setMsg(e.message || 'حصلت مشكلة في الصورة', true);
-  } finally {
-    setBusy(false);
+    toast('تعذر قراءة الصورة', true);
   }
 }
 
-/* ---------- الباركود ---------- */
+/* ================= الباركود: استخراج الكود ================= */
 function normalizeDigits(s){
   return s
-    .replace(/[\u0660-\u0669]/g, d => String(d.charCodeAt(0) - 0x660))
-    .replace(/[\u06F0-\u06F9]/g, d => String(d.charCodeAt(0) - 0x6F0));
+    .replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x660))
+    .replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x6F0));
 }
 function extractCode(raw){
   raw = normalizeDigits((raw || '').trim());
@@ -341,122 +723,466 @@ function extractCode(raw){
   return code.replace(/[^A-Za-z0-9]/g, '');
 }
 function hasDash(raw){ return /[-–—]/.test(raw || ''); }
-function counterKey(code){ return 'cnt:' + code; }
-function nextName(code){
-  let n = 0;
-  try { n = parseInt(localStorage.getItem(counterKey(code)) || '0', 10) || 0; } catch (e){}
-  return (n === 0 ? code : code + '_' + (n + 1)) + '.jpg';
-}
-function commitName(code){
-  try {
-    const n = parseInt(localStorage.getItem(counterKey(code)) || '0', 10) || 0;
-    localStorage.setItem(counterKey(code), String(n + 1));
-  } catch (e){}
+function uniqueName(code){
+  const names = new Set(library.map(i => i.name));
+  let n = 1, name = code + '.jpg';
+  while (names.has(name)){ n++; name = code + '_' + n + '.jpg'; }
+  return name;
 }
 function updateName(){
-  const raw = $('bc').value;
-  const code = extractCode(raw);
-  const el = $('fname');
+  const raw = $('bc').value, code = extractCode(raw), el = $('fname');
   if (!code){ el.textContent = 'اكتب أو امسح الباركود'; el.className = 'fname'; return; }
-  el.textContent = nextName(code);
+  el.textContent = uniqueName(code);
   el.className = 'fname' + (hasDash(raw) ? '' : ' warn');
-  if (!hasDash(raw)) el.title = 'مفيش شرطة - هيتحفظ بالرقم كله';
 }
-function setMsg(t, err){
-  const m = $('msg');
-  m.textContent = t || '';
-  m.className = 'msg' + (err ? ' err' : '');
+function updateSaveBtn(){
+  const b = $('btnSave'), code = extractCode($('bc').value);
+  let label, dis = true;
+  if (!ST.base) label = '—';
+  else if (!ST.ready) label = 'جاري التنضيف… تقدر تكتب الباركود دلوقتي';
+  else if (!code) label = 'اكتب أو امسح الباركود';
+  else { label = 'حفظ ' + uniqueName(code); dis = false; }
+  $('saveTxt').textContent = label;
+  b.disabled = dis;
 }
 
-/* ---------- مسح الباركود ---------- */
-let reader = null;
-async function startScan(){
-  if (!window.ZXing){ setMsg('مكتبة المسح ماتحملتش، تأكد من النت.', true); return; }
-  $('scanner').classList.add('on');
-  const hints = new Map();
-  hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [
-    ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.EAN_13,
-    ZXing.BarcodeFormat.EAN_8, ZXing.BarcodeFormat.UPC_A, ZXing.BarcodeFormat.ITF,
-    ZXing.BarcodeFormat.QR_CODE, ZXing.BarcodeFormat.DATA_MATRIX
-  ]);
-  hints.set(ZXing.DecodeHintType.TRY_HARDER, true);
-  reader = new ZXing.BrowserMultiFormatReader(hints);
-  try {
-    await reader.decodeFromConstraints(
-      { video:{ facingMode:{ ideal:'environment' }, width:{ ideal:1280 }, height:{ ideal:720 } } },
-      'video',
-      (res) => { if (res) onScan(res.getText()); }
-    );
-  } catch (e){
-    console.error(e);
-    stopScan();
-    setMsg('الكاميرا ماتفتحتش. اسمح للموقع باستخدام الكاميرا (لازم الموقع يكون https).', true);
+/* ================= قراءة الباركود (zxing-wasm + BarcodeDetector) ================= */
+const ZX_URL = 'https://cdn.jsdelivr.net/npm/zxing-wasm@3.1.2/dist/iife/reader/index.js';
+let zxP = null;
+function ensureZX(){
+  if (window.ZXingWASM) return Promise.resolve(window.ZXingWASM);
+  if (!zxP){
+    zxP = new Promise((res, rej) => {
+      const s = document.createElement('script');
+      s.src = ZX_URL;
+      s.onload = () => window.ZXingWASM ? res(window.ZXingWASM) : rej(new Error('zx missing'));
+      s.onerror = () => rej(new Error('zx load'));
+      document.head.appendChild(s);
+    }).catch(e => { zxP = null; throw e; });
+  }
+  return zxP;
+}
+async function zxRead(imageData){
+  const Z = await ensureZX();
+  const fn = Z.readBarcodes || Z.readBarcodesFromImageData;
+  const res = await fn(imageData, { tryHarder:true, formats:[], maxNumberOfSymbols:1 });
+  for (const r of (res || [])){ if (r && r.text) return r.text; }
+  return '';
+}
+let nativeDet = null;
+try { if ('BarcodeDetector' in window) nativeDet = new BarcodeDetector(); } catch (e){ nativeDet = null; }
+
+function stopStream(s){ if (s) s.getTracks().forEach(t => t.stop()); }
+function setupTrack(stream, btnId){
+  const btn = $(btnId);
+  btn.hidden = true; btn.classList.remove('on');
+  const tr = stream.getVideoTracks()[0];
+  if (!tr || !tr.getCapabilities) return;
+  let caps = {};
+  try { caps = tr.getCapabilities(); } catch (e){}
+  if (caps.focusMode && caps.focusMode.indexOf && caps.focusMode.indexOf('continuous') >= 0){
+    tr.applyConstraints({ advanced:[{ focusMode:'continuous' }] }).catch(() => {});
+  }
+  if (caps.torch){
+    btn.hidden = false;
+    btn.onclick = async () => {
+      const on = !btn.classList.contains('on');
+      try { await tr.applyConstraints({ advanced:[{ torch:on }] }); btn.classList.toggle('on', on); } catch (e){}
+    };
   }
 }
-function stopScan(){
-  try { reader && reader.reset(); } catch (e){}
-  reader = null;
-  $('scanner').classList.remove('on');
+function videoConstraints(){
+  const portrait = innerHeight >= innerWidth;
+  return { audio:false, video:{ facingMode:{ ideal:'environment' }, width:{ ideal: portrait ? 1080 : 1920 }, height:{ ideal: portrait ? 1920 : 1080 } } };
 }
-function onScan(text){
-  stopScan();
+
+let scanStream = null, scanTimer = null, scanning = false, scanStart = 0, scanErr = 0;
+const scv = document.createElement('canvas');
+async function openScan(){
+  $('scan').classList.add('on');
+  $('scanHint').textContent = 'جاري تشغيل الكاميرا…';
+  $('scanHint').classList.remove('good');
+  try {
+    scanStream = await navigator.mediaDevices.getUserMedia(videoConstraints());
+  } catch (e){
+    closeScan();
+    toast('الكاميرا مش متاحة. استخدم زر «صوّر الباركود» أو اكتب الكود.', true);
+    return;
+  }
+  const v = $('scanVideo');
+  v.srcObject = scanStream;
+  try { await v.play(); } catch (e){}
+  setupTrack(scanStream, 'scanTorch');
+  scanning = true; scanStart = Date.now(); scanErr = 0;
+  $('scanHint').textContent = 'وجّه الكاميرا للباركود لحد ما يملا الإطار';
+  ensureZX().catch(() => {});
+  scanTick();
+}
+function closeScan(){
+  scanning = false;
+  clearTimeout(scanTimer);
+  stopStream(scanStream); scanStream = null;
+  $('scanVideo').srcObject = null;
+  $('scan').classList.remove('on');
+}
+async function scanTick(){
+  if (!scanning) return;
+  const v = $('scanVideo');
+  let found = '';
+  try {
+    if (v.readyState >= 2 && v.videoWidth){
+      if (nativeDet){
+        try {
+          const r = await nativeDet.detect(v);
+          if (r && r.length && r[0].rawValue) found = r[0].rawValue;
+        } catch (e){}
+      }
+      if (!found){
+        const k = Math.min(1, 1280 / Math.max(v.videoWidth, v.videoHeight));
+        scv.width = Math.round(v.videoWidth * k); scv.height = Math.round(v.videoHeight * k);
+        const x = scv.getContext('2d', { willReadFrequently:true });
+        x.drawImage(v, 0, 0, scv.width, scv.height);
+        found = await zxRead(x.getImageData(0, 0, scv.width, scv.height));
+      }
+    }
+  } catch (e){
+    scanErr++;
+    console.warn(e);
+    if (scanErr === 3 && !nativeDet) $('scanHint').textContent = 'مكتبة القراءة ما اتحمّلتش (النت؟). اكتب الكود.';
+  }
+  if (!scanning) return;
+  if (found){ onScanned(found); return; }
+  if (Date.now() - scanStart > 7000 && scanErr < 3) $('scanHint').textContent = 'قرّب أو بعّد شوية وثبّت إيدك، أو استخدم زر الصورة تحت';
+  scanTimer = setTimeout(scanTick, 40);
+}
+function onScanned(text){
+  closeScan();
+  text = String(text).trim();
   $('bc').value = text;
-  updateName();
+  updateName(); updateSaveBtn();
   if (navigator.vibrate) navigator.vibrate(80);
+  toast('اتقرا: ' + text + (hasDash(text) ? '' : ' (من غير شرطة، هيتحفظ بالرقم كله)'));
+}
+async function scanPhoto(file){
+  if (!file) return;
+  toast('جاري قراءة الباركود…');
+  try {
+    const img = await loadImage(file);
+    const c = scaledCanvas(img, 2000);
+    let text = '';
+    if (nativeDet){
+      try {
+        const r = await nativeDet.detect(c);
+        if (r && r.length && r[0].rawValue) text = r[0].rawValue;
+      } catch (e){}
+    }
+    if (!text){
+      text = await zxRead(c.getContext('2d', { willReadFrequently:true }).getImageData(0, 0, c.width, c.height));
+    }
+    if (!text){
+      const c2 = scaledCanvas(img, 1000);
+      text = await zxRead(c2.getContext('2d', { willReadFrequently:true }).getImageData(0, 0, c2.width, c2.height));
+    }
+    if (text) onScanned(text);
+    else toast('ماقدرتش أقرأ الباركود من الصورة. قرّب أكتر وخلي الخطوط واضحة، أو اكتبه.', true);
+  } catch (e){
+    console.warn(e);
+    toast('ماقدرتش أقرأ الباركود (تأكد من النت أول مرة). اكتبه بإيدك.', true);
+  }
 }
 
-/* ---------- الحفظ ---------- */
-async function save(useShare){
-  const raw = $('bc').value;
-  const code = extractCode(raw);
-  if (!code){ setMsg('اكتب الباركود الأول.', true); $('bc').focus(); return; }
-  if (!state.base){ setMsg('صوّر المنتج الأول.', true); return; }
-  setMsg('جاري التجهيز…');
-  const blob = await toBlob(resultCanvas, 'image/jpeg', 0.93);
-  const name = nextName(code);
-  const file = new File([blob], name, { type:'image/jpeg' });
-
-  if (useShare && navigator.canShare && navigator.canShare({ files:[file] })){
-    try {
-      await navigator.share({ files:[file] });
-      commitName(code); updateName();
-      setMsg('تم ✅ اختار "حفظ في الملفات" واحفظ باسم ' + name);
-      return;
-    } catch (e){
-      if (e && e.name === 'AbortError'){ setMsg(''); return; }
+/* ================= الكاميرا الذكية ================= */
+let camStream = null, camTimer = null, camBox = null, camMiss = 0;
+function fitWrap(){
+  const v = $('camVideo');
+  if (!v.videoWidth) return;
+  const stage = $('camStage');
+  const k = Math.min(stage.clientWidth / v.videoWidth, stage.clientHeight / v.videoHeight);
+  const w = $('camWrap');
+  w.style.width = Math.round(v.videoWidth * k) + 'px';
+  w.style.height = Math.round(v.videoHeight * k) + 'px';
+}
+function setCamHint(t, good){
+  const h = $('camHint');
+  h.textContent = t;
+  h.classList.toggle('good', !!good);
+}
+async function openCam(){
+  $('cam').classList.add('on');
+  setCamHint('جاري تشغيل الكاميرا…');
+  camBox = null; camMiss = 0; $('camBox').hidden = true;
+  try {
+    camStream = await navigator.mediaDevices.getUserMedia(videoConstraints());
+  } catch (e){
+    closeCam();
+    toast('الكاميرا مش متاحة. اسمح للموقع بالكاميرا (لازم https) أو استخدم «كاميرا الموبايل».', true);
+    return;
+  }
+  const v = $('camVideo');
+  v.srcObject = camStream;
+  try { await v.play(); } catch (e){}
+  setupTrack(camStream, 'camTorch');
+  fitWrap();
+  camTick();
+}
+function closeCam(){
+  clearTimeout(camTimer);
+  stopStream(camStream); camStream = null;
+  $('camVideo').srcObject = null;
+  $('cam').classList.remove('on');
+}
+function camTick(){
+  if (!camStream) return;
+  const v = $('camVideo');
+  if (v.readyState >= 2 && v.videoWidth){
+    if (!v.dataset.fit){ fitWrap(); v.dataset.fit = '1'; }
+    let nb = null;
+    try { nb = detectBoxFrom(v, v.videoWidth, v.videoHeight); } catch (e){}
+    if (nb){
+      camMiss = 0;
+      if (!camBox) camBox = { x0:nb.x0, y0:nb.y0, x1:nb.x1, y1:nb.y1 };
+      else for (const k of ['x0', 'y0', 'x1', 'y1']) camBox[k] += (nb[k] - camBox[k]) * 0.5;
+    } else {
+      camMiss++;
+      if (camMiss > 5) camBox = null;
+    }
+    const el = $('camBox');
+    if (!camBox){
+      el.hidden = true;
+      setCamHint('حط المنتج على خلفية سادة قدام الكاميرا');
+    } else {
+      el.hidden = false;
+      el.style.left = (camBox.x0 * 100) + '%';
+      el.style.top = (camBox.y0 * 100) + '%';
+      el.style.width = ((camBox.x1 - camBox.x0) * 100) + '%';
+      el.style.height = ((camBox.y1 - camBox.y0) * 100) + '%';
+      setCamHint('تم تحديد المنتج ✓ اضغط للتصوير', true);
     }
   }
+  camTimer = setTimeout(camTick, 110);
+}
+function shoot(){
+  const v = $('camVideo');
+  if (!v.videoWidth) return;
+  const full = document.createElement('canvas');
+  full.width = v.videoWidth; full.height = v.videoHeight;
+  full.getContext('2d').drawImage(v, 0, 0);
+  let c = full;
+  if (camBox) c = cropCanvas(full, camBox, 0.1);
+  c = scaledCanvas(c, 1600);
+  closeCam();
+  startEdit(c);
+}
+
+/* ================= الحفظ والمكتبة ================= */
+async function hasDirPerm(){
+  if (!dirHandle || !dirHandle.queryPermission) return false;
+  const o = { mode:'readwrite' };
+  if ((await dirHandle.queryPermission(o)) === 'granted') return true;
+  return (await dirHandle.requestPermission(o)) === 'granted';
+}
+async function writeToDir(name, blob){
+  const fh = await dirHandle.getFileHandle(name, { create:true });
+  const w = await fh.createWritable();
+  await w.write(blob);
+  await w.close();
+}
+async function saveCurrent(){
+  if (!ST.ready) return;
+  const code = extractCode($('bc').value);
+  if (!code){ toast('اكتب الباركود الأول', true); $('bc').focus(); return; }
+  let dirOk = false;
+  if (dirHandle){ try { dirOk = await hasDirPerm(); } catch (e){ dirOk = false; } }
+  $('btnSave').disabled = true;
+  const blob = await toBlob(resultCanvas, 'image/jpeg', 0.93);
+  const name = uniqueName(code);
+  const item = { name, blob, t:Date.now() };
+  library.push(item);
+  DB.put(item).catch(() => {});
+  let wrote = false;
+  if (dirOk){
+    try { await writeToDir(name, blob); wrote = true; } catch (e){ console.warn(e); }
+  }
+  renderLibrary();
+  toast(wrote ? ('اتحفظ في الفولدر: ' + name) : ('اتحفظ في المكتبة: ' + name));
+  resetEditor();
+}
+function renderLibrary(){
+  libUrls.forEach(u => URL.revokeObjectURL(u)); libUrls = [];
+  const g = $('libGrid'); g.innerHTML = '';
+  library.slice().reverse().forEach(it => {
+    const url = URL.createObjectURL(it.blob); libUrls.push(url);
+    const d = document.createElement('div'); d.className = 'thumb';
+    const img = document.createElement('img'); img.alt = ''; img.src = url;
+    const sp = document.createElement('span'); sp.textContent = it.name;
+    const bt = document.createElement('button'); bt.setAttribute('aria-label', 'حذف');
+    bt.innerHTML = '<svg class="ic"><use href="#i-x"/></svg>';
+    bt.onclick = () => removeItem(it.name);
+    d.appendChild(img); d.appendChild(sp); d.appendChild(bt);
+    g.appendChild(d);
+  });
+  $('libCount').textContent = library.length;
+  $('hdrCount').textContent = library.length;
+  $('libEmpty').hidden = library.length > 0;
+  $('libActions').hidden = library.length === 0;
+  updateName();
+}
+function removeItem(name){
+  library = library.filter(i => i.name !== name);
+  DB.del(name).catch(() => {});
+  renderLibrary();
+}
+function clearLibrary(){
+  if (!library.length) return;
+  if (!confirm('تمسح كل الصور من المكتبة؟ الصور اللي نزّلتها قبل كده مش هتتأثر.')) return;
+  library = [];
+  DB.clear().catch(() => {});
+  renderLibrary();
+}
+function downloadBlob(blob, name){
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = name;
   document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(a.href), 10000);
-  commitName(code); updateName();
-  setMsg('تم تنزيل ' + name + ' ✅');
+  setTimeout(() => URL.revokeObjectURL(a.href), 15000);
+}
+async function deliver(files){
+  if (navigator.canShare && navigator.canShare({ files })){
+    try { await navigator.share({ files }); return; }
+    catch (e){ if (e && e.name === 'AbortError') return; }
+  }
+  for (const f of files){ downloadBlob(f, f.name); await sleep(450); }
+}
+const CRC_T = (function(){
+  const t = new Uint32Array(256);
+  for (let n = 0; n < 256; n++){
+    let c = n;
+    for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+function crc32(b){
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < b.length; i++) c = CRC_T[(c ^ b[i]) & 255] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+async function makeZip(files){
+  const enc = new TextEncoder();
+  const parts = [], central = [];
+  let offset = 0;
+  const now = new Date();
+  const dt = ((now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1)) & 0xFFFF;
+  const dd = (((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate()) & 0xFFFF;
+  for (const f of files){
+    const data = new Uint8Array(await f.blob.arrayBuffer());
+    const nameB = enc.encode(f.name);
+    const crc = crc32(data);
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true);
+    lh.setUint16(8, 0, true); lh.setUint16(10, dt, true); lh.setUint16(12, dd, true);
+    lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true);
+    lh.setUint16(26, nameB.length, true); lh.setUint16(28, 0, true);
+    parts.push(lh.buffer, nameB, data);
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true);
+    ch.setUint16(10, 0, true); ch.setUint16(12, dt, true); ch.setUint16(14, dd, true);
+    ch.setUint32(16, crc, true); ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true);
+    ch.setUint16(28, nameB.length, true); ch.setUint16(30, 0, true); ch.setUint16(32, 0, true);
+    ch.setUint16(34, 0, true); ch.setUint16(36, 0, true); ch.setUint32(38, 0, true); ch.setUint32(42, offset, true);
+    central.push(ch.buffer, nameB);
+    offset += 30 + nameB.length + data.length;
+  }
+  let cdSize = 0;
+  for (const p of central) cdSize += p.byteLength;
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(4, 0, true); end.setUint16(6, 0, true);
+  end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+  end.setUint32(12, cdSize, true); end.setUint32(16, offset, true); end.setUint16(20, 0, true);
+  return new Blob(parts.concat(central, [end.buffer]), { type:'application/zip' });
+}
+async function exportZip(){
+  if (!library.length){ toast('المكتبة فاضية', true); return; }
+  toast('جاري تجهيز الـ ZIP…');
+  const zip = await makeZip(library.map(i => ({ name:'صور المنتجات/' + i.name, blob:i.blob })));
+  await deliver([new File([zip], 'صور المنتجات.zip', { type:'application/zip' })]);
+}
+async function exportFiles(){
+  if (!library.length){ toast('المكتبة فاضية', true); return; }
+  await deliver(library.map(i => new File([i.blob], i.name, { type:'image/jpeg' })));
+}
+function updateFolderUI(){
+  const ok = 'showDirectoryPicker' in window;
+  $('folderRow').hidden = !ok;
+  if (ok) $('folderName').textContent = dirHandle ? ('فولدر الحفظ: ' + dirHandle.name + ' (كل صورة بتتحفظ فيه تلقائي)') : 'اختار فولدر «صور المنتجات» عشان الحفظ يبقى تلقائي';
+}
+async function pickFolder(){
+  try {
+    dirHandle = await window.showDirectoryPicker({ mode:'readwrite' });
+    DB.kvSet('dir', dirHandle).catch(() => {});
+    updateFolderUI();
+  } catch (e){}
 }
 
-/* ---------- ربط الأزرار ---------- */
+/* ================= ربط الأزرار ================= */
+$('btnSmart').onclick = openCam;
+$('camClose').onclick = closeCam;
+$('shutter').onclick = shoot;
+window.addEventListener('resize', () => { if (camStream) fitWrap(); });
+$('camVideo').addEventListener('loadedmetadata', fitWrap);
+
 $('btnCam').onclick = () => { $('fileCam').value = ''; $('fileCam').click(); };
 $('btnGal').onclick = () => { $('fileGal').value = ''; $('fileGal').click(); };
 $('fileCam').onchange = e => handleFile(e.target.files[0]);
 $('fileGal').onchange = e => handleFile(e.target.files[0]);
+
+document.querySelectorAll('#seg button').forEach(b => { b.onclick = () => setMode(b.dataset.m, true); });
+
 $('light').oninput = () => {
   const v = +$('light').value;
   $('lightVal').textContent = v === 0 ? 'تلقائي' : (v > 0 ? '+' + v : String(v));
   scheduleRender();
 };
 $('shadow').onchange = scheduleRender;
-$('bc').oninput = updateName;
-$('btnScan').onclick = startScan;
-$('btnCloseScan').onclick = stopScan;
-$('btnShare').onclick = () => save(true);
-$('btnDl').onclick = () => save(false);
 
 const cmp = $('btnCompare');
 cmp.addEventListener('pointerdown', e => { e.preventDefault(); showOriginal(); });
 ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev =>
-  cmp.addEventListener(ev, () => { if (state.base) showCanvas(resultCanvas); }));
+  cmp.addEventListener(ev, () => { if (!ST.base) return; if (ST.ready) showCanvas(resultCanvas); else showOriginal(); }));
 cmp.addEventListener('contextmenu', e => e.preventDefault());
+
+$('bc').oninput = () => { updateName(); updateSaveBtn(); };
+$('btnScan').onclick = openScan;
+$('scanClose').onclick = closeScan;
+$('btnScanPhoto').onclick = () => { $('bcPhoto').value = ''; $('bcPhoto').click(); };
+$('scanPhotoBtn').onclick = () => { closeScan(); $('bcPhoto').value = ''; $('bcPhoto').click(); };
+$('bcPhoto').onchange = e => scanPhoto(e.target.files[0]);
+
+$('btnSave').onclick = saveCurrent;
+$('btnCancel').onclick = resetEditor;
+$('btnZip').onclick = exportZip;
+$('btnAllFiles').onclick = exportFiles;
+$('btnClear').onclick = clearLibrary;
+$('btnFolder').onclick = pickFolder;
+
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden){ closeCam(); closeScan(); }
+});
+
+(async function init(){
+  setMode(settings.mode, false);
+  try {
+    await DB.open();
+    library = (await DB.all()).sort((a, b) => a.t - b.t);
+    try { dirHandle = (await DB.kvGet('dir')) || null; } catch (e){ dirHandle = null; }
+  } catch (e){ console.warn('storage unavailable', e); }
+  renderLibrary();
+  updateFolderUI();
+  setTimeout(() => {
+    if (settings.mode === 'ai') warmup();
+    ensureZX().catch(() => {});
+  }, 1200);
+})();
 </script>
 </body>
 </html>
