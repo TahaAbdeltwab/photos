@@ -1,0 +1,462 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="صور المنتجات">
+<meta name="theme-color" content="#0f172a">
+<title>صور المنتجات</title>
+<style>
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:#0f172a;color:#e5e7eb;font-family:-apple-system,"Segoe UI",Tahoma,Arial,sans-serif}
+  .app{max-width:560px;margin:0 auto;padding:16px 14px calc(40px + env(safe-area-inset-bottom))}
+  h1{font-size:20px;margin:6px 0 14px;text-align:center}
+  .card{background:#1e293b;border-radius:16px;padding:14px;margin-bottom:12px}
+  .row{display:flex;gap:10px}
+  .row>*{flex:1}
+  .btn{appearance:none;border:0;border-radius:12px;padding:14px 10px;font-size:16px;font-weight:600;background:#334155;color:#fff;cursor:pointer}
+  .btn:active{transform:scale(.98)}
+  .btn.primary{background:#2563eb}
+  .btn.green{background:#16a34a}
+  .btn.small{padding:10px;font-size:14px}
+  .stage{position:relative;background:#fff;border-radius:12px;overflow:hidden;line-height:0}
+  .stage canvas{width:100%;height:auto;display:block}
+  .busy{position:absolute;inset:0;background:rgba(15,23,42,.82);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;line-height:1.5;text-align:center;padding:20px}
+  .busy[hidden]{display:none}
+  .spin{width:38px;height:38px;border:4px solid #475569;border-top-color:#60a5fa;border-radius:50%;animation:sp 1s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  label{display:block;font-size:14px;color:#cbd5e1;margin:10px 0 6px}
+  input[type=text]{width:100%;padding:14px;border-radius:12px;border:2px solid #334155;background:#0f172a;color:#fff;font-size:20px;direction:ltr;text-align:center;letter-spacing:1px}
+  input[type=text]:focus{outline:none;border-color:#2563eb}
+  input[type=range]{width:100%}
+  .chk{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:15px}
+  .fname{margin-top:10px;padding:10px;border-radius:10px;background:#0f172a;text-align:center;font-size:15px;direction:ltr;color:#93c5fd;min-height:40px}
+  .fname.warn{color:#fbbf24}
+  .msg{margin-top:10px;font-size:14px;text-align:center;color:#86efac;min-height:20px}
+  .msg.err{color:#fca5a5}
+  [hidden]{display:none!important}
+  #scanner{position:fixed;inset:0;background:#000;z-index:50;display:none;flex-direction:column}
+  #scanner.on{display:flex}
+  #scanner video{flex:1;width:100%;object-fit:cover;min-height:0}
+  .frame{position:absolute;left:10%;right:10%;top:30%;height:22%;border:3px solid #22c55e;border-radius:14px;box-shadow:0 0 0 9999px rgba(0,0,0,.35);pointer-events:none}
+  .stxt{position:absolute;top:calc(env(safe-area-inset-top) + 20px);left:0;right:0;text-align:center;color:#fff;font-size:16px;text-shadow:0 1px 4px #000}
+  #scanner .btn{margin:14px;background:#dc2626}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js"></script>
+</head>
+<body>
+<div class="app">
+  <h1>📸 صور المنتجات</h1>
+
+  <div class="card">
+    <div class="row">
+      <button class="btn primary" id="btnCam">📷 صوّر المنتج</button>
+      <button class="btn" id="btnGal">🖼️ من المعرض</button>
+    </div>
+    <input type="file" id="fileCam" accept="image/*" capture="environment" hidden>
+    <input type="file" id="fileGal" accept="image/*" hidden>
+  </div>
+
+  <div class="card" id="previewCard" hidden>
+    <div class="stage">
+      <canvas id="out"></canvas>
+      <div class="busy" id="busy" hidden><div class="spin"></div><div id="busyTxt">جاري التجهيز…</div></div>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn small" id="btnCompare">👁️ اضغط مطوّلاً لرؤية الأصلي</button>
+    </div>
+    <label for="light">الإضاءة: <span id="lightVal">تلقائي</span></label>
+    <input type="range" id="light" min="-40" max="40" value="0">
+    <label class="chk"><input type="checkbox" id="shadow" checked> ظل خفيف تحت المنتج</label>
+  </div>
+
+  <div class="card" id="saveCard" hidden>
+    <label for="bc">الباركود (مثال: 38-4521)</label>
+    <input type="text" id="bc" placeholder="38-xxxx" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <div class="row" style="margin-top:10px">
+      <button class="btn" id="btnScan">📷 امسح الباركود</button>
+    </div>
+    <div class="fname" id="fname">اكتب أو امسح الباركود</div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn green" id="btnShare">💾 حفظ / مشاركة</button>
+      <button class="btn" id="btnDl">⬇️ تنزيل</button>
+    </div>
+    <div class="msg" id="msg"></div>
+  </div>
+</div>
+
+<div id="scanner">
+  <video id="video" playsinline muted></video>
+  <div class="frame"></div>
+  <div class="stxt">وجّه الكاميرا ناحية الباركود</div>
+  <button class="btn" id="btnCloseScan">إلغاء</button>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const state = { base:null, cut:null, orig:null };
+const resultCanvas = document.createElement('canvas');
+let blobOut = null;
+let removeBgFn = null;
+let renderTimer = null;
+
+/* ---------- أدوات صور ---------- */
+function loadImage(file){
+  return new Promise((res, rej) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); res(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('تعذر قراءة الصورة')); };
+    img.src = url;
+  });
+}
+function blobToImage(blob){ return loadImage(blob); }
+function scaledCanvas(img, maxSide){
+  const k = Math.min(1, maxSide / Math.max(img.naturalWidth || img.width, img.naturalHeight || img.height));
+  const w = Math.round((img.naturalWidth || img.width) * k);
+  const h = Math.round((img.naturalHeight || img.height) * k);
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const x = c.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(img, 0, 0, w, h);
+  return c;
+}
+function toBlob(canvas, type, q){
+  return new Promise(res => canvas.toBlob(res, type, q));
+}
+function cropToAlpha(src){
+  const w = src.width, h = src.height;
+  const x = src.getContext('2d', { willReadFrequently:true });
+  const d = x.getImageData(0, 0, w, h).data;
+  let minX = w, minY = h, maxX = -1, maxY = -1;
+  for (let y = 0; y < h; y++){
+    for (let xx = 0; xx < w; xx++){
+      if (d[(y * w + xx) * 4 + 3] > 16){
+        if (xx < minX) minX = xx; if (xx > maxX) maxX = xx;
+        if (y < minY) minY = y; if (y > maxY) maxY = y;
+      }
+    }
+  }
+  if (maxX < 0) return null;
+  const cw = maxX - minX + 1, ch = maxY - minY + 1;
+  const c = document.createElement('canvas'); c.width = cw; c.height = ch;
+  c.getContext('2d').drawImage(src, minX, minY, cw, ch, 0, 0, cw, ch);
+  return c;
+}
+
+/* ---------- تحسين الإضاءة والألوان ---------- */
+function enhance(src, bright){
+  const w = src.width, h = src.height;
+  const c = document.createElement('canvas'); c.width = w; c.height = h;
+  const x = c.getContext('2d', { willReadFrequently:true });
+  x.drawImage(src, 0, 0);
+  const id = x.getImageData(0, 0, w, h), d = id.data;
+
+  const hist = new Uint32Array(256);
+  let n = 0, sr = 0, sg = 0, sb = 0;
+  for (let i = 0; i < d.length; i += 4){
+    if (d[i + 3] > 200){
+      const l = ((d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000) | 0;
+      hist[l]++; n++; sr += d[i]; sg += d[i + 1]; sb += d[i + 2];
+    }
+  }
+  if (n < 100) return c;
+
+  let acc = 0, lo = 0;
+  for (; lo < 255; lo++){ acc += hist[lo]; if (acc > n * 0.01) break; }
+  acc = 0; let hi = 255;
+  for (; hi > 0; hi--){ acc += hist[hi]; if (acc > n * 0.01) break; }
+  if (hi - lo < 40){ lo = Math.min(lo, 20); hi = Math.max(hi, 235); }
+
+  let m = 0;
+  for (let l = 0; l < 256; l++) m += hist[l] * Math.min(1, Math.max(0, (l - lo) / (hi - lo)));
+  m = Math.min(0.9, Math.max(0.1, m / n));
+  const target = Math.min(0.8, Math.max(0.35, 0.56 + bright / 200));
+  const gamma = Math.min(1.9, Math.max(0.55, Math.log(target) / Math.log(m)));
+
+  const lut = new Uint8ClampedArray(256);
+  for (let i = 0; i < 256; i++){
+    const v = Math.min(1, Math.max(0, (i - lo) / (hi - lo)));
+    lut[i] = Math.round(Math.pow(v, gamma) * 255);
+  }
+
+  // توازن أبيض خفيف (نص القوة) عشان الألوان ماتتغيرش بزيادة
+  const ar = sr / n, ag = sg / n, ab = sb / n, gray = (ar + ag + ab) / 3;
+  const gain = a => 1 + (Math.min(1.12, Math.max(0.88, gray / a)) - 1) * 0.5;
+  const gr = gain(ar), gg = gain(ag), gb = gain(ab);
+  const sat = 1.1;
+
+  for (let i = 0; i < d.length; i += 4){
+    let r = lut[Math.min(255, d[i] * gr) | 0];
+    let g = lut[Math.min(255, d[i + 1] * gg) | 0];
+    let b = lut[Math.min(255, d[i + 2] * gb) | 0];
+    const l = 0.299 * r + 0.587 * g + 0.114 * b;
+    d[i] = l + (r - l) * sat;
+    d[i + 1] = l + (g - l) * sat;
+    d[i + 2] = l + (b - l) * sat;
+  }
+
+  // حدة خفيفة
+  const copy = new Uint8ClampedArray(d);
+  const amt = 0.6;
+  for (let y = 1; y < h - 1; y++){
+    for (let xx = 1; xx < w - 1; xx++){
+      const p = (y * w + xx) * 4;
+      if (copy[p + 3] === 0) continue;
+      for (let k = 0; k < 3; k++){
+        const v = copy[p + k] * 5 - copy[p - 4 + k] - copy[p + 4 + k] - copy[p - w * 4 + k] - copy[p + w * 4 + k];
+        d[p + k] = copy[p + k] + (v - copy[p + k]) * amt;
+      }
+    }
+  }
+  x.putImageData(id, 0, 0);
+  return c;
+}
+
+/* ---------- تركيب الصورة النهائية ---------- */
+function render(){
+  if (!state.base) return;
+  const S = 1500;
+  resultCanvas.width = S; resultCanvas.height = S;
+  const x = resultCanvas.getContext('2d');
+  x.imageSmoothingQuality = 'high';
+  x.fillStyle = '#ffffff'; x.fillRect(0, 0, S, S);
+
+  const hasCut = !!state.cut;
+  const enh = enhance(hasCut ? state.cut : state.base, +$('light').value);
+  const pad = hasCut ? 0.09 : 0.0;
+  const box = S * (1 - 2 * pad);
+  const sc = Math.min(box / enh.width, box / enh.height);
+  const w = enh.width * sc, h = enh.height * sc;
+  const dx = (S - w) / 2, dy = (S - h) / 2;
+
+  if (hasCut && $('shadow').checked){
+    x.save();
+    x.shadowColor = 'rgba(0,0,0,.22)';
+    x.shadowBlur = S * 0.025;
+    x.shadowOffsetY = S * 0.012;
+    x.drawImage(enh, dx, dy, w, h);
+    x.restore();
+  } else {
+    x.drawImage(enh, dx, dy, w, h);
+  }
+  showCanvas(resultCanvas);
+}
+function showCanvas(src){
+  const out = $('out');
+  out.width = src.width; out.height = src.height;
+  out.getContext('2d').drawImage(src, 0, 0);
+}
+function showOriginal(){
+  if (!state.orig) return;
+  const S = 1500;
+  const c = document.createElement('canvas'); c.width = S; c.height = S;
+  const x = c.getContext('2d');
+  x.fillStyle = '#fff'; x.fillRect(0, 0, S, S);
+  const sc = Math.min(S / state.orig.width, S / state.orig.height);
+  const w = state.orig.width * sc, h = state.orig.height * sc;
+  x.drawImage(state.orig, (S - w) / 2, (S - h) / 2, w, h);
+  showCanvas(c);
+}
+function scheduleRender(){
+  clearTimeout(renderTimer);
+  renderTimer = setTimeout(render, 130);
+}
+
+/* ---------- معالجة الصورة ---------- */
+function setBusy(on, txt){
+  $('busy').hidden = !on;
+  if (txt) $('busyTxt').textContent = txt;
+}
+async function getRemover(){
+  if (!removeBgFn){
+    const m = await import('https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.5/+esm');
+    removeBgFn = m.removeBackground || m.default;
+  }
+  return removeBgFn;
+}
+async function handleFile(file){
+  if (!file) return;
+  $('previewCard').hidden = false;
+  $('saveCard').hidden = false;
+  $('bc').value = ''; updateName(); setMsg('');
+  $('light').value = 0; $('lightVal').textContent = 'تلقائي';
+  state.base = null; state.cut = null; blobOut = null;
+  setBusy(true, 'جاري تجهيز الصورة…');
+  $('previewCard').scrollIntoView({ behavior:'smooth', block:'start' });
+
+  try {
+    const img = await loadImage(file);
+    state.base = scaledCanvas(img, 1600);
+    state.orig = state.base;
+    showOriginal();
+
+    try {
+      setBusy(true, 'تحميل نموذج الذكاء الاصطناعي… (أول مرة بس، ممكن ياخد دقيقة)');
+      const rb = await getRemover();
+      const inBlob = await toBlob(state.base, 'image/jpeg', 0.92);
+      const outBlob = await rb(inBlob, {
+        output: { format:'image/png' },
+        progress: (key, cur, total) => {
+          if (String(key).startsWith('fetch') && total){
+            setBusy(true, 'تحميل نموذج الذكاء الاصطناعي… ' + Math.round(cur / total * 100) + '%');
+          } else {
+            setBusy(true, 'جاري عزل المنتج وتنضيف الخلفية…');
+          }
+        }
+      });
+      const cutImg = await blobToImage(outBlob);
+      const full = document.createElement('canvas');
+      full.width = cutImg.naturalWidth; full.height = cutImg.naturalHeight;
+      full.getContext('2d').drawImage(cutImg, 0, 0);
+      state.cut = cropToAlpha(full);
+      if (!state.cut) setMsg('ماقدرش يحدد المنتج، اتحسنت الصورة بدون إزالة الخلفية.', true);
+    } catch (e){
+      console.error(e);
+      state.cut = null;
+      setMsg('إزالة الخلفية ماشتغلتش (تأكد من النت أول مرة). اتحسنت الإضاءة بس.', true);
+    }
+
+    setBusy(true, 'جاري تحسين الإضاءة…');
+    await new Promise(r => setTimeout(r, 30));
+    render();
+  } catch (e){
+    console.error(e);
+    setMsg(e.message || 'حصلت مشكلة في الصورة', true);
+  } finally {
+    setBusy(false);
+  }
+}
+
+/* ---------- الباركود ---------- */
+function normalizeDigits(s){
+  return s
+    .replace(/[\u0660-\u0669]/g, d => String(d.charCodeAt(0) - 0x660))
+    .replace(/[\u06F0-\u06F9]/g, d => String(d.charCodeAt(0) - 0x6F0));
+}
+function extractCode(raw){
+  raw = normalizeDigits((raw || '').trim());
+  const parts = raw.split(/[-–—]/);
+  const code = parts.length > 1 ? parts.slice(1).join('') : raw;
+  return code.replace(/[^A-Za-z0-9]/g, '');
+}
+function hasDash(raw){ return /[-–—]/.test(raw || ''); }
+function counterKey(code){ return 'cnt:' + code; }
+function nextName(code){
+  let n = 0;
+  try { n = parseInt(localStorage.getItem(counterKey(code)) || '0', 10) || 0; } catch (e){}
+  return (n === 0 ? code : code + '_' + (n + 1)) + '.jpg';
+}
+function commitName(code){
+  try {
+    const n = parseInt(localStorage.getItem(counterKey(code)) || '0', 10) || 0;
+    localStorage.setItem(counterKey(code), String(n + 1));
+  } catch (e){}
+}
+function updateName(){
+  const raw = $('bc').value;
+  const code = extractCode(raw);
+  const el = $('fname');
+  if (!code){ el.textContent = 'اكتب أو امسح الباركود'; el.className = 'fname'; return; }
+  el.textContent = nextName(code);
+  el.className = 'fname' + (hasDash(raw) ? '' : ' warn');
+  if (!hasDash(raw)) el.title = 'مفيش شرطة - هيتحفظ بالرقم كله';
+}
+function setMsg(t, err){
+  const m = $('msg');
+  m.textContent = t || '';
+  m.className = 'msg' + (err ? ' err' : '');
+}
+
+/* ---------- مسح الباركود ---------- */
+let reader = null;
+async function startScan(){
+  if (!window.ZXing){ setMsg('مكتبة المسح ماتحملتش، تأكد من النت.', true); return; }
+  $('scanner').classList.add('on');
+  const hints = new Map();
+  hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [
+    ZXing.BarcodeFormat.CODE_128, ZXing.BarcodeFormat.CODE_39, ZXing.BarcodeFormat.EAN_13,
+    ZXing.BarcodeFormat.EAN_8, ZXing.BarcodeFormat.UPC_A, ZXing.BarcodeFormat.ITF,
+    ZXing.BarcodeFormat.QR_CODE, ZXing.BarcodeFormat.DATA_MATRIX
+  ]);
+  hints.set(ZXing.DecodeHintType.TRY_HARDER, true);
+  reader = new ZXing.BrowserMultiFormatReader(hints);
+  try {
+    await reader.decodeFromConstraints(
+      { video:{ facingMode:{ ideal:'environment' }, width:{ ideal:1280 }, height:{ ideal:720 } } },
+      'video',
+      (res) => { if (res) onScan(res.getText()); }
+    );
+  } catch (e){
+    console.error(e);
+    stopScan();
+    setMsg('الكاميرا ماتفتحتش. اسمح للموقع باستخدام الكاميرا (لازم الموقع يكون https).', true);
+  }
+}
+function stopScan(){
+  try { reader && reader.reset(); } catch (e){}
+  reader = null;
+  $('scanner').classList.remove('on');
+}
+function onScan(text){
+  stopScan();
+  $('bc').value = text;
+  updateName();
+  if (navigator.vibrate) navigator.vibrate(80);
+}
+
+/* ---------- الحفظ ---------- */
+async function save(useShare){
+  const raw = $('bc').value;
+  const code = extractCode(raw);
+  if (!code){ setMsg('اكتب الباركود الأول.', true); $('bc').focus(); return; }
+  if (!state.base){ setMsg('صوّر المنتج الأول.', true); return; }
+  setMsg('جاري التجهيز…');
+  const blob = await toBlob(resultCanvas, 'image/jpeg', 0.93);
+  const name = nextName(code);
+  const file = new File([blob], name, { type:'image/jpeg' });
+
+  if (useShare && navigator.canShare && navigator.canShare({ files:[file] })){
+    try {
+      await navigator.share({ files:[file] });
+      commitName(code); updateName();
+      setMsg('تم ✅ اختار "حفظ في الملفات" واحفظ باسم ' + name);
+      return;
+    } catch (e){
+      if (e && e.name === 'AbortError'){ setMsg(''); return; }
+    }
+  }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+  commitName(code); updateName();
+  setMsg('تم تنزيل ' + name + ' ✅');
+}
+
+/* ---------- ربط الأزرار ---------- */
+$('btnCam').onclick = () => { $('fileCam').value = ''; $('fileCam').click(); };
+$('btnGal').onclick = () => { $('fileGal').value = ''; $('fileGal').click(); };
+$('fileCam').onchange = e => handleFile(e.target.files[0]);
+$('fileGal').onchange = e => handleFile(e.target.files[0]);
+$('light').oninput = () => {
+  const v = +$('light').value;
+  $('lightVal').textContent = v === 0 ? 'تلقائي' : (v > 0 ? '+' + v : String(v));
+  scheduleRender();
+};
+$('shadow').onchange = scheduleRender;
+$('bc').oninput = updateName;
+$('btnScan').onclick = startScan;
+$('btnCloseScan').onclick = stopScan;
+$('btnShare').onclick = () => save(true);
+$('btnDl').onclick = () => save(false);
+
+const cmp = $('btnCompare');
+cmp.addEventListener('pointerdown', e => { e.preventDefault(); showOriginal(); });
+['pointerup', 'pointerleave', 'pointercancel'].forEach(ev =>
+  cmp.addEventListener(ev, () => { if (state.base) showCanvas(resultCanvas); }));
+cmp.addEventListener('contextmenu', e => e.preventDefault());
+</script>
+</body>
+</html>
