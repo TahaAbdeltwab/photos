@@ -41,28 +41,22 @@
   .cta-ic{width:50px;height:50px;border-radius:15px;background:rgba(255,255,255,.18);display:grid;place-items:center}
   .cta-ic .ic{width:26px;height:26px}
   .cta-t b{display:block;font-size:18px;font-weight:800}.cta-t small{font-size:12.5px;opacity:.9}
-  .seg{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:15px;padding:5px}
-  .seg.c3{grid-template-columns:repeat(3,1fr)}
+  .seg{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:15px;padding:5px}
   .seg button{appearance:none;border:0;background:transparent;color:var(--mu);border-radius:11px;padding:9px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.25}
   .seg button b{font-size:15px;color:var(--tx)}.seg button small{font-size:11.5px}
+  .seg.sm button{padding:8px 4px}.seg.sm button b{font-size:14px}
   .seg button.on{background:linear-gradient(135deg,rgba(59,130,246,.28),rgba(34,211,238,.16));box-shadow:inset 0 0 0 1px rgba(59,130,246,.7)}
   .hint{font-size:12.5px;color:var(--mu);margin:10px 2px 0;line-height:1.6}
   .pill{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:7px 12px;border-radius:999px;font-size:12.5px;background:var(--s2);border:1px solid var(--line);color:var(--mu)}
   .pill.ok{color:#86efac;border-color:rgba(34,197,94,.4)}
   .pill.err{color:#fbbf24;border-color:rgba(245,158,11,.4)}
-  .chk{background-color:#fff;background-image:linear-gradient(45deg,#dfe3ea 25%,transparent 25%,transparent 75%,#dfe3ea 75%),linear-gradient(45deg,#dfe3ea 25%,transparent 25%,transparent 75%,#dfe3ea 75%);background-size:20px 20px;background-position:0 0,10px 10px}
-  .stage{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 0 0 1px var(--line)}
-  .stage.editing{touch-action:none}
-  .stage canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+  .stage{position:relative;background:#fff;border-radius:14px;overflow:hidden;aspect-ratio:var(--ar,1);width:min(100%,calc(66vh * var(--ar,1)));margin:0 auto;box-shadow:0 0 0 1px var(--line)}
+  .checker{background-color:#fff;background-image:linear-gradient(45deg,#dde2ea 25%,transparent 25%,transparent 75%,#dde2ea 75%),linear-gradient(45deg,#dde2ea 25%,transparent 25%,transparent 75%,#dde2ea 75%);background-size:18px 18px;background-position:0 0,9px 9px}
+  .dims{text-align:center;font-size:12.5px;color:var(--mu);margin-top:8px;direction:ltr}
+  .stage canvas{position:absolute;inset:0;width:100%;height:100%}
   .proc{position:absolute;top:10px;right:10px;display:flex;align-items:center;gap:8px;background:rgba(8,13,25,.86);color:#fff;border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:600;max-width:calc(100% - 20px)}
   .spin{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.25);border-top-color:var(--br2);border-radius:50%;animation:sp .8s linear infinite;flex:none}
   @keyframes sp{to{transform:rotate(360deg)}}
-  .cropbox{position:absolute;border:2px solid var(--br2);box-shadow:0 0 0 200vmax rgba(0,0,0,.5);touch-action:none;cursor:move}
-  .cropbox i{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;background:#fff;border:3px solid var(--br);border-radius:50%;touch-action:none}
-  .cropbox i[data-h=tl]{left:0;top:0}.cropbox i[data-h=tr]{left:100%;top:0}
-  .cropbox i[data-h=bl]{left:0;top:100%}.cropbox i[data-h=br]{left:100%;top:100%}
-  .cropbox i[data-h=t]{left:50%;top:0}.cropbox i[data-h=b]{left:50%;top:100%}
-  .cropbox i[data-h=l]{left:0;top:50%}.cropbox i[data-h=r]{left:100%;top:50%}
   .tools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
   .sw{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--tx);cursor:pointer}
   .sw input{width:20px;height:20px;accent-color:var(--br)}
@@ -77,12 +71,14 @@
   .savein{max-width:560px;margin:0 auto;display:grid;grid-template-columns:1fr 54px;gap:10px}
   .badge{display:inline-block;background:var(--br);color:#fff;border-radius:999px;padding:1px 9px;font-size:12px;margin-right:6px}
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-  .thumb{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1/1;border:1px solid var(--line)}
+  .thumb{position:relative;border-radius:12px;overflow:hidden;background-color:#fff;background-image:linear-gradient(45deg,#dde2ea 25%,transparent 25%,transparent 75%,#dde2ea 75%),linear-gradient(45deg,#dde2ea 25%,transparent 25%,transparent 75%,#dde2ea 75%);background-size:14px 14px;background-position:0 0,7px 7px;aspect-ratio:1/1;border:1px solid var(--line)}
   .thumb img{width:100%;height:100%;object-fit:contain;display:block}
   .thumb span{position:absolute;left:0;right:0;bottom:0;background:rgba(8,13,25,.8);color:#fff;font-size:11px;text-align:center;padding:3px 2px;direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .thumb button{position:absolute;top:5px;right:5px;width:26px;height:26px;border-radius:50%;border:0;background:rgba(8,13,25,.8);color:#fff;display:grid;place-items:center;cursor:pointer;padding:0}
   .thumb button .ic{width:14px;height:14px}
   .empty{color:var(--mu);font-size:14px;text-align:center;padding:18px 6px}
+  .link{appearance:none;background:none;border:0;color:var(--mu);font-size:13px;text-decoration:underline;cursor:pointer;margin-top:12px;padding:6px}
+  .link.danger{color:#fca5a5}
   .folder{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px;font-size:13.5px}
   .folder .nm{flex:1;color:var(--mu)}
   .toast{position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));transform:translate(-50%,20px);background:#0f1b33;color:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 16px;font-size:14px;font-weight:600;z-index:200;opacity:0;pointer-events:none;transition:all .22s;max-width:calc(100% - 28px);text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5)}
@@ -123,7 +119,7 @@
   <symbol id="i-folder" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></symbol>
   <symbol id="i-share" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></symbol>
   <symbol id="i-bolt" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></symbol>
-  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol>
 </defs></svg>
 
 <header><div class="hbar">
@@ -148,6 +144,7 @@
 
     <div class="sec-t" style="margin-top:18px">طريقة تنضيف الخلفية</div>
     <div class="seg" id="seg">
+      <button data-m="auto"><b>تلقائي</b><small>الأسرع</small></button>
       <button data-m="ai"><b>دقيق</b><small>ذكاء اصطناعي</small></button>
       <button data-m="fast"><b>سريع</b><small>لحظي</small></button>
     </div>
@@ -156,55 +153,38 @@
   </section>
 
   <section class="card" id="editor" hidden>
-    <div class="stage chk" id="stage">
+    <div class="stage" id="stage">
       <canvas id="out" width="4" height="4"></canvas>
-      <div class="cropbox" id="cropBox" data-h="m" hidden>
-        <i data-h="tl"></i><i data-h="tr"></i><i data-h="bl"></i><i data-h="br"></i>
-        <i data-h="t"></i><i data-h="b"></i><i data-h="l"></i><i data-h="r"></i>
-      </div>
       <div class="proc" id="proc" hidden><i class="spin"></i><span id="procTxt"></span></div>
     </div>
-
-    <div id="normalTools">
-      <div class="tools">
-        <button class="btn sm" id="btnCompare">اضغط مطوّلاً لرؤية الأصلي</button>
-        <button class="btn sm" id="btnEdit"><svg class="ic"><use href="#i-edit"/></svg>قص ومسح يدوي</button>
-      </div>
-      <div class="slide"><span>الإضاءة</span><input type="range" id="light" min="-40" max="40" value="0"><em id="lightVal">تلقائي</em></div>
-      <div class="slide"><span>التحسين</span><input type="range" id="enh" min="0" max="100" value="85"><em id="enhVal">85%</em></div>
-      <div class="tools">
-        <label class="sw"><input type="checkbox" id="whiteBg"><span>خلفية بيضاء (JPG) بدل الشفافة (PNG)</span></label>
-      </div>
+    <div class="dims" id="dims"></div>
+    <div class="row2">
+      <button class="btn sm" id="btnCompare">اضغط مطوّلاً: الأصلي</button>
+      <button class="btn sm" id="btnRefine"><svg class="ic"><use href="#i-spark"/></svg>تحسين بالذكاء الاصطناعي</button>
     </div>
-
-    <div id="editBar" hidden>
-      <div class="seg c3" id="toolSeg" style="margin-top:12px">
-        <button data-t="crop"><b>قص</b></button>
-        <button data-t="restore"><b>رجّع</b></button>
-        <button data-t="erase"><b>امسح</b></button>
-      </div>
-      <p class="hint" id="edHint"></p>
-      <div class="slide" id="brushRow"><span>الفرشاة</span><input type="range" id="brush" min="14" max="120" value="44"><em id="brushVal">44</em></div>
-      <div class="row2">
-        <button class="btn" id="btnUndo">تراجع</button>
-        <button class="btn" id="btnAutoBox">قص تلقائي</button>
-      </div>
-      <button class="btn pri big" id="btnEditDone" style="width:100%;margin-top:10px"><svg class="ic"><use href="#i-check"/></svg>تم</button>
+    <div class="sec-t" style="margin-top:16px">الخلفية</div>
+    <div class="seg sm" id="segBg">
+      <button data-v="alpha"><b>شفافة</b><small>PNG</small></button>
+      <button data-v="white"><b>بيضاء</b><small>JPG</small></button>
     </div>
+    <div class="sec-t" style="margin-top:14px">الهامش حوالين المنتج</div>
+    <div class="seg sm" id="segMargin">
+      <button data-v="none"><b>بدون</b></button>
+      <button data-v="small"><b>صغير</b></button>
+      <button data-v="medium"><b>متوسط</b></button>
+    </div>
+    <div class="slide"><span>الإضاءة</span><input type="range" id="light" min="-40" max="40" value="0"><em id="lightVal">تلقائي</em></div>
   </section>
 
   <section class="card" id="bcCard" hidden>
-    <div class="sec-t">باركود المنتج (مثال: C48121-62C ← هيتحفظ 48121)</div>
-    <input type="text" id="bc" placeholder="C48121-62C" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <div class="sec-t">باركود المنتج (مثال: 38-4521)</div>
+    <input type="text" id="bc" placeholder="38-0000" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
     <div class="row2">
       <button class="btn" id="btnScan"><svg class="ic"><use href="#i-bar"/></svg>امسح بالكاميرا</button>
       <button class="btn" id="btnScanPhoto"><svg class="ic"><use href="#i-cam"/></svg>صوّر الباركود</button>
     </div>
     <input type="file" id="bcPhoto" accept="image/*" capture="environment" hidden>
     <div class="fname" id="fname">اكتب أو امسح الباركود</div>
-    <div class="tools">
-      <label class="sw"><input type="checkbox" id="loopCam" checked><span>ارجع للكاميرا الذكية بعد الحفظ (أسرع للتصوير)</span></label>
-    </div>
   </section>
 
   <section class="card" id="library">
@@ -266,9 +246,14 @@
 
 <script>
 const $ = id => document.getElementById(id);
-const ST = { base:null, orig:null, full:null, box:null, boxAuto:true, undo:[], ready:false, edit:false, fromCam:false };
-const ED = { tool:'crop', M:0, drag:null, paint:false, last:null, raf:0 };
-const settings = { mode: (function(){ try { return localStorage.getItem('mode') || 'ai'; } catch (e) { return 'ai'; } })() };
+const ST = { base:null, orig:null, cut:null, flat:null, ready:false };
+function loadSet(k, allowed, def){ try { const v = localStorage.getItem(k); return allowed.indexOf(v) >= 0 ? v : def; } catch (e){ return def; } }
+function saveSet(k, v){ try { localStorage.setItem(k, v); } catch (e){} }
+const settings = {
+  mode: loadSet('mode2', ['auto', 'ai', 'fast'], 'auto'),
+  bg: loadSet('bg', ['alpha', 'white'], 'alpha'),
+  margin: loadSet('margin', ['none', 'small', 'medium'], 'none')
+};
 const resultCanvas = document.createElement('canvas');
 const ai = { state:'idle', pct:0, noGpu:false };
 let library = [], dirHandle = null, job = 0, renderTimer = null, libUrls = [];
@@ -283,7 +268,6 @@ function toast(msg, err){
   toastT = setTimeout(() => { t.className = 'toast'; }, err ? 4200 : 2600);
 }
 function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
-const clamp = (v, a, b) => v < a ? a : (v > b ? b : v);
 
 /* ================= تخزين المكتبة (IndexedDB) ================= */
 const DB = {
@@ -350,31 +334,21 @@ function bboxFromCounts(rc, cc, w, h, mr, mc){
   if (y1 <= y0 || x1 <= x0) return null;
   return { x0, y0, x1, y1 };
 }
-/* حدود المنتج بالظبط من الشفافية (بيتجاهل البقع الصغيرة) */
-function alphaBox(src){
+function cropToAlpha(src){
   const w = src.width, h = src.height;
   const d = src.getContext('2d', { willReadFrequently:true }).getImageData(0, 0, w, h).data;
   const rc = new Uint32Array(h), cc = new Uint32Array(w);
   for (let y = 0; y < h; y++){
     for (let x = 0; x < w; x++){
-      if (d[(y * w + x) * 4 + 3] > 60){ rc[y]++; cc[x]++; }
+      if (d[(y * w + x) * 4 + 3] > 16){ rc[y]++; cc[x]++; }
     }
   }
-  const b = bboxFromCounts(rc, cc, w, h, Math.max(2, Math.round(w * 0.004)), Math.max(2, Math.round(h * 0.004)));
-  return b ? { x0:b.x0, y0:b.y0, x1:b.x1 + 1, y1:b.y1 + 1 } : null;
-}
-function fullBox(c){ return { x0:0, y0:0, x1:c.width, y1:c.height }; }
-/* تنعيم حواف القناع عشان مايبقاش فيه هالة */
-function hardenAlpha(c){
-  const x = c.getContext('2d', { willReadFrequently:true });
-  const id = x.getImageData(0, 0, c.width, c.height), d = id.data;
-  for (let i = 3; i < d.length; i += 4){
-    const a = d[i];
-    if (a === 0 || a === 255) continue;
-    let s = (a / 255 - 0.12) / 0.76; s = s < 0 ? 0 : (s > 1 ? 1 : s);
-    d[i] = Math.round(s * s * (3 - 2 * s) * 255);
-  }
-  x.putImageData(id, 0, 0);
+  const b = bboxFromCounts(rc, cc, w, h, 1, 1);
+  if (!b) return null;
+  const c = document.createElement('canvas');
+  c.width = b.x1 - b.x0 + 1; c.height = b.y1 - b.y0 + 1;
+  c.getContext('2d').drawImage(src, b.x0, b.y0, c.width, c.height, 0, 0, c.width, c.height);
+  return c;
 }
 
 /* ================= تحديد المنتج (الفرق عن لون الخلفية) ================= */
@@ -424,15 +398,18 @@ function autoCrop(canvas){
   return b ? cropCanvas(canvas, b, 0.1) : null;
 }
 
-/* ================= الوضع السريع: قص الخلفية بشفافية فورية ================= */
-function flatten(base){
+/* ================= الوضع السريع: قص شفاف فوري (للخلفية السادة) ================= */
+function fastCut(base){
   const w = base.width, h = base.height;
   const c = document.createElement('canvas'); c.width = w; c.height = h;
   const x = c.getContext('2d', { willReadFrequently:true });
   x.drawImage(base, 0, 0);
   const id = x.getImageData(0, 0, w, h), d = id.data;
-  const E = edgeColors(d, w, h, Math.max(3, Math.round(Math.min(w, h) * 0.035)));
+  const t = Math.max(3, Math.round(Math.min(w, h) * 0.03));
+  const E = edgeColors(d, w, h, t);
+  const A = new Uint8ClampedArray(w * h);
   const bgv = [1, 1, 1];
+  let ringN = 0, ringHit = 0;
   for (let y = 0; y < h; y++){
     const ty = y / (h - 1);
     for (let xx = 0; xx < w; xx++){
@@ -444,46 +421,106 @@ function flatten(base){
         const dd = Math.abs(d[i + k] - bg);
         if (dd > md) md = dd;
       }
-      let s = (md - 12) / 24; s = s < 0 ? 0 : (s > 1 ? 1 : s);
+      let s = (md - 18) / 22; s = s < 0 ? 0 : (s > 1 ? 1 : s);
       const a = s * s * (3 - 2 * s);
+      A[y * w + xx] = Math.round(a * 255);
+      if (y < t || y >= h - t || xx < t || xx >= w - t){ ringN++; if (a > 0.5) ringHit++; }
       for (let k = 0; k < 3; k++) d[i + k] = Math.min(255, d[i + k] * 255 / bgv[k]);
-      d[i + 3] = Math.round(a * 255);
+    }
+  }
+
+  // خريطة صغيرة لتنضيف القناع: أكبر جسم + ملء الفجوات الداخلية
+  const L = Math.min(1, 256 / Math.max(w, h));
+  const lw = Math.max(1, Math.ceil(w * L)), lh = Math.max(1, Math.ceil(h * L));
+  const cellOf = (xx, y) => Math.min(lh - 1, (y * L) | 0) * lw + Math.min(lw - 1, (xx * L) | 0);
+  const M = new Uint8Array(lw * lh);
+  for (let y = 0; y < h; y++) for (let xx = 0; xx < w; xx++) if (A[y * w + xx] >= 128) M[cellOf(xx, y)] = 1;
+  const lab = new Int32Array(lw * lh);
+  const sizes = [0];
+  const stack = [];
+  let nl = 0;
+  for (let s0 = 0; s0 < M.length; s0++){
+    if (!M[s0] || lab[s0]) continue;
+    nl++; let sz = 0; stack.length = 0; stack.push(s0); lab[s0] = nl;
+    while (stack.length){
+      const p = stack.pop(); sz++;
+      const px = p % lw, py = (p / lw) | 0;
+      if (px > 0 && M[p - 1] && !lab[p - 1]){ lab[p - 1] = nl; stack.push(p - 1); }
+      if (px < lw - 1 && M[p + 1] && !lab[p + 1]){ lab[p + 1] = nl; stack.push(p + 1); }
+      if (py > 0 && M[p - lw] && !lab[p - lw]){ lab[p - lw] = nl; stack.push(p - lw); }
+      if (py < lh - 1 && M[p + lw] && !lab[p + lw]){ lab[p + lw] = nl; stack.push(p + lw); }
+    }
+    sizes.push(sz);
+  }
+  if (!nl) return { cut:null, ok:false };
+  let best = 1, total = 0;
+  for (let i = 1; i <= nl; i++){ total += sizes[i]; if (sizes[i] > sizes[best]) best = i; }
+  const K = new Uint8Array(lw * lh);
+  for (let i = 0; i < K.length; i++) if (lab[i] === best) K[i] = 1;
+  const D = new Uint8Array(lw * lh);
+  for (let y = 0; y < lh; y++){
+    for (let xx = 0; xx < lw; xx++){
+      let v = 0;
+      for (let dy = -1; dy <= 1 && !v; dy++){
+        for (let dx = -1; dx <= 1; dx++){
+          const nx = xx + dx, ny = y + dy;
+          if (nx >= 0 && ny >= 0 && nx < lw && ny < lh && K[ny * lw + nx]){ v = 1; break; }
+        }
+      }
+      D[y * lw + xx] = v;
+    }
+  }
+  const R = new Uint8Array(lw * lh);
+  stack.length = 0;
+  const seed = p => { if (!D[p] && !R[p]){ R[p] = 1; stack.push(p); } };
+  for (let xx = 0; xx < lw; xx++){ seed(xx); seed((lh - 1) * lw + xx); }
+  for (let y = 0; y < lh; y++){ seed(y * lw); seed(y * lw + lw - 1); }
+  while (stack.length){
+    const p = stack.pop(), px = p % lw, py = (p / lw) | 0;
+    if (px > 0) seed(p - 1);
+    if (px < lw - 1) seed(p + 1);
+    if (py > 0) seed(p - lw);
+    if (py < lh - 1) seed(p + lw);
+  }
+
+  let fg = 0;
+  for (let y = 0; y < h; y++){
+    for (let xx = 0; xx < w; xx++){
+      const p = y * w + xx, cell = cellOf(xx, y), i = p * 4;
+      let a = A[p];
+      if (!D[cell]) a = R[cell] ? 0 : 255;
+      if (a >= 128) fg++;
+      if (a === 0){
+        d[i] = 0; d[i + 1] = 0; d[i + 2] = 0;
+      } else if (a < 250){
+        const af = a / 255;
+        for (let k = 0; k < 3; k++){
+          const v = (d[i + k] - (1 - af) * 255) / af;
+          d[i + k] = v < 0 ? 0 : (v > 255 ? 255 : v);
+        }
+      }
+      d[i + 3] = a;
     }
   }
   x.putImageData(id, 0, 0);
-  return c;
+  const area = fg / (w * h);
+  const ok = (ringHit / Math.max(1, ringN)) < 0.03 && area > 0.03 && area < 0.9 && (sizes[best] / total) > 0.8;
+  const cut = cropToAlpha(c);
+  return { cut, ok: ok && !!cut };
 }
 
-/* ================= تحسين احترافي (ألوان + وضوح + شحذ) ================= */
-function blurGrid(a, gw, gh, r){
-  const t = new Float32Array(a.length);
-  for (let y = 0; y < gh; y++){
-    for (let x = 0; x < gw; x++){
-      let s = 0, k = 0;
-      for (let dx = -r; dx <= r; dx++){ s += a[y * gw + clamp(x + dx, 0, gw - 1)]; k++; }
-      t[y * gw + x] = s / k;
-    }
-  }
-  for (let y = 0; y < gh; y++){
-    for (let x = 0; x < gw; x++){
-      let s = 0, k = 0;
-      for (let dy = -r; dy <= r; dy++){ s += t[clamp(y + dy, 0, gh - 1) * gw + x]; k++; }
-      a[y * gw + x] = s / k;
-    }
-  }
-}
-function enhance(src, bright, amt){
+/* ================= تحسين الإضاءة والألوان ================= */
+function enhance(src, bright, flat){
   const w = src.width, h = src.height;
   const c = document.createElement('canvas'); c.width = w; c.height = h;
   const x = c.getContext('2d', { willReadFrequently:true });
   x.drawImage(src, 0, 0);
   const id = x.getImageData(0, 0, w, h), d = id.data;
-  const orig = new Uint8ClampedArray(d);
 
   const hist = new Uint32Array(256);
   let n = 0, sr = 0, sg = 0, sb = 0;
   for (let i = 0; i < d.length; i += 4){
-    if (d[i + 3] > 200){
+    if (d[i + 3] > 200 && !(flat && d[i] > 243 && d[i + 1] > 243 && d[i + 2] > 243)){
       const l = ((d[i] * 299 + d[i + 1] * 587 + d[i + 2] * 114) / 1000) | 0;
       hist[l]++; n++; sr += d[i]; sg += d[i + 1]; sb += d[i + 2];
     }
@@ -491,9 +528,9 @@ function enhance(src, bright, amt){
   if (n < 100) return c;
 
   let acc = 0, lo = 0;
-  for (; lo < 255; lo++){ acc += hist[lo]; if (acc > n * 0.005) break; }
+  for (; lo < 255; lo++){ acc += hist[lo]; if (acc > n * 0.01) break; }
   acc = 0; let hi = 255;
-  for (; hi > 0; hi--){ acc += hist[hi]; if (acc > n * 0.005) break; }
+  for (; hi > 0; hi--){ acc += hist[hi]; if (acc > n * 0.01) break; }
   if (hi - lo < 40){ lo = Math.min(lo, 20); hi = Math.max(hi, 235); }
 
   let m = 0;
@@ -511,116 +548,76 @@ function enhance(src, bright, amt){
   const ar = sr / n, ag = sg / n, ab = sb / n, gray = (ar + ag + ab) / 3;
   const gain = a => 1 + (Math.min(1.12, Math.max(0.88, gray / a)) - 1) * 0.5;
   const gr = gain(ar), gg = gain(ag), gb = gain(ab);
+  const sat = 1.1;
 
   for (let i = 0; i < d.length; i += 4){
-    d[i] = lut[Math.min(255, d[i] * gr) | 0];
-    d[i + 1] = lut[Math.min(255, d[i + 1] * gg) | 0];
-    d[i + 2] = lut[Math.min(255, d[i + 2] * gb) | 0];
+    const r = lut[Math.min(255, d[i] * gr) | 0];
+    const g = lut[Math.min(255, d[i + 1] * gg) | 0];
+    const b = lut[Math.min(255, d[i + 2] * gb) | 0];
+    const l = 0.299 * r + 0.587 * g + 0.114 * b;
+    d[i] = l + (r - l) * sat;
+    d[i + 1] = l + (g - l) * sat;
+    d[i + 2] = l + (b - l) * sat;
   }
 
-  /* وضوح (تباين محلي): الفرق بين السطوع والمتوسط المحيط */
-  const G = 8, gw = Math.ceil(w / G), gh = Math.ceil(h / G);
-  const gs = new Float32Array(gw * gh), gc = new Float32Array(gw * gh);
-  for (let y = 0; y < h; y += 2){
-    for (let xx = 0; xx < w; xx += 2){
-      const i = (y * w + xx) * 4;
-      if (d[i + 3] < 200) continue;
-      const gi = ((y / G) | 0) * gw + ((xx / G) | 0);
-      gs[gi] += 0.299 * d[i] + 0.587 * d[i + 1] + 0.114 * d[i + 2]; gc[gi]++;
-    }
-  }
-  blurGrid(gs, gw, gh, 2); blurGrid(gs, gw, gh, 2);
-  blurGrid(gc, gw, gh, 2); blurGrid(gc, gw, gh, 2);
-  const samp = (arr, fx, fy) => {
-    const x0 = Math.floor(fx), y0 = Math.floor(fy), tx = fx - x0, ty = fy - y0;
-    const xa = clamp(x0, 0, gw - 1), xb = clamp(x0 + 1, 0, gw - 1), ya = clamp(y0, 0, gh - 1), yb = clamp(y0 + 1, 0, gh - 1);
-    return (arr[ya * gw + xa] * (1 - tx) + arr[ya * gw + xb] * tx) * (1 - ty) + (arr[yb * gw + xa] * (1 - tx) + arr[yb * gw + xb] * tx) * ty;
-  };
-  for (let y = 0; y < h; y++){
-    for (let xx = 0; xx < w; xx++){
-      const i = (y * w + xx) * 4;
-      if (d[i + 3] === 0) continue;
-      let r = d[i], g = d[i + 1], b = d[i + 2];
-      const Y = 0.299 * r + 0.587 * g + 0.114 * b;
-      const fx = xx / G - 0.5, fy = y / G - 0.5;
-      const cs = samp(gc, fx, fy);
-      const B = cs > 0.01 ? samp(gs, fx, fy) / cs : Y;
-      const ratio = clamp((Y + (Y - B) * 0.45 + 2) / (Y + 2), 0.75, 1.35);
-      r *= ratio; g *= ratio; b *= ratio;
-      const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
-      const sat = (mx - mn) / (mx + 1);
-      const f = 1.06 + 0.28 * (1 - sat);
-      const l = 0.299 * r + 0.587 * g + 0.114 * b;
-      d[i] = clamp(l + (r - l) * f, 0, 255);
-      d[i + 1] = clamp(l + (g - l) * f, 0, 255);
-      d[i + 2] = clamp(l + (b - l) * f, 0, 255);
-    }
-  }
-
-  /* شحذ بدون هالات على الحواف الشفافة */
   const copy = new Uint8ClampedArray(d);
-  const sh = 0.55, w4 = w * 4;
+  const amt = 0.6;
   for (let y = 1; y < h - 1; y++){
     for (let xx = 1; xx < w - 1; xx++){
       const p = (y * w + xx) * 4;
       if (copy[p + 3] === 0) continue;
-      const o0 = p - 4, o1 = p + 4, o2 = p - w4, o3 = p + w4;
       for (let k = 0; k < 3; k++){
-        const c0 = copy[p + k];
-        const s = (copy[o0 + 3] < 128 ? c0 : copy[o0 + k]) + (copy[o1 + 3] < 128 ? c0 : copy[o1 + k])
-                + (copy[o2 + 3] < 128 ? c0 : copy[o2 + k]) + (copy[o3 + 3] < 128 ? c0 : copy[o3 + k]);
-        d[p + k] = c0 + (c0 * 5 - s - c0) * sh;
+        const v = copy[p + k] * 5 - copy[p - 4 + k] - copy[p + 4 + k] - copy[p - w * 4 + k] - copy[p + w * 4 + k];
+        d[p + k] = copy[p + k] + (v - copy[p + k]) * amt;
       }
-    }
-  }
-
-  /* خلط مع الأصل حسب قوة التحسين */
-  if (amt < 1){
-    for (let i = 0; i < d.length; i += 4){
-      for (let k = 0; k < 3; k++) d[i + k] = orig[i + k] + (d[i + k] - orig[i + k]) * amt;
     }
   }
   x.putImageData(id, 0, 0);
   return c;
 }
 
-/* ================= تركيب الصورة النهائية (مقصوصة على المنتج) ================= */
+/* ================= تركيب الصورة النهائية (قص محكم على المنتج) ================= */
+const MARGINS = { none:0, small:0.02, medium:0.06 };
+function extNow(){ return settings.bg === 'alpha' ? 'png' : 'jpg'; }
 function render(){
-  if (!ST.full) return;
-  const b = ST.box || fullBox(ST.full);
-  const cw = Math.max(1, b.x1 - b.x0), ch = Math.max(1, b.y1 - b.y0);
-  const sc = Math.min(1, 1600 / Math.max(cw, ch));
-  const tw = Math.max(1, Math.round(cw * sc)), th = Math.max(1, Math.round(ch * sc));
-  const pre = document.createElement('canvas'); pre.width = tw; pre.height = th;
-  const px = pre.getContext('2d');
-  px.imageSmoothingQuality = 'high';
-  px.drawImage(ST.full, b.x0, b.y0, cw, ch, 0, 0, tw, th);
-  const enh = enhance(pre, +$('light').value, +$('enh').value / 100);
-  resultCanvas.width = tw; resultCanvas.height = th;
+  if (!ST.cut) return;
+  const enh = enhance(ST.cut, +$('light').value, false);
+  const m = Math.round(Math.max(enh.width, enh.height) * (MARGINS[settings.margin] || 0));
+  const W = enh.width + 2 * m, H = enh.height + 2 * m;
+  const k = Math.min(1, 2400 / Math.max(W, H));
+  resultCanvas.width = Math.max(1, Math.round(W * k));
+  resultCanvas.height = Math.max(1, Math.round(H * k));
   const x = resultCanvas.getContext('2d');
-  x.clearRect(0, 0, tw, th);
-  if ($('whiteBg').checked){ x.fillStyle = '#ffffff'; x.fillRect(0, 0, tw, th); }
-  x.drawImage(enh, 0, 0);
-  showCanvas(resultCanvas);
+  x.imageSmoothingQuality = 'high';
+  x.clearRect(0, 0, resultCanvas.width, resultCanvas.height);
+  if (settings.bg === 'white'){ x.fillStyle = '#ffffff'; x.fillRect(0, 0, resultCanvas.width, resultCanvas.height); }
+  x.drawImage(enh, Math.round(m * k), Math.round(m * k), Math.round(enh.width * k), Math.round(enh.height * k));
+  showResult();
 }
-function showCanvas(src){
+function resultBlob(){
+  return settings.bg === 'alpha' ? toBlob(resultCanvas, 'image/png') : toBlob(resultCanvas, 'image/jpeg', 0.95);
+}
+function showResult(){
+  showCanvas(resultCanvas, true);
+  $('dims').textContent = resultCanvas.width + ' × ' + resultCanvas.height + ' px · ' + (settings.bg === 'alpha' ? 'PNG شفاف' : 'JPG خلفية بيضاء');
+}
+function showCanvas(src, isResult){
   const out = $('out');
   out.width = src.width; out.height = src.height;
-  out.getContext('2d').drawImage(src, 0, 0);
+  const x = out.getContext('2d');
+  x.clearRect(0, 0, out.width, out.height);
+  x.drawImage(src, 0, 0);
+  const st = $('stage');
+  st.style.setProperty('--ar', (src.width / src.height).toFixed(4));
+  st.classList.toggle('checker', !!isResult && settings.bg === 'alpha');
 }
 function showOriginal(){
   if (!ST.orig) return;
-  const S = 1200;
-  const c = document.createElement('canvas'); c.width = S; c.height = S;
-  const x = c.getContext('2d');
-  x.fillStyle = '#fff'; x.fillRect(0, 0, S, S);
-  const sc = Math.min(S / ST.orig.width, S / ST.orig.height);
-  const w = ST.orig.width * sc, h = ST.orig.height * sc;
-  x.drawImage(ST.orig, (S - w) / 2, (S - h) / 2, w, h);
-  showCanvas(c);
+  showCanvas(ST.orig, false);
+  $('dims').textContent = ST.orig.width + ' × ' + ST.orig.height + ' px · الصورة الأصلية';
 }
 function scheduleRender(){
-  if (!ST.ready || ST.edit) return;
+  if (!ST.ready) return;
   clearTimeout(renderTimer);
   renderTimer = setTimeout(render, 130);
 }
@@ -656,7 +653,7 @@ function aiConfig(useGpu, onMsg){
   };
 }
 async function warmup(){
-  if (settings.mode !== 'ai' || ai.state === 'ready' || ai.state === 'loading') return;
+  if (settings.mode === 'fast' || ai.state === 'ready' || ai.state === 'loading') return;
   ai.state = 'loading'; ai.pct = 0; setPill();
   try {
     const m = await loadImgly();
@@ -675,12 +672,11 @@ async function warmup(){
   }
   setPill();
 }
-/* بيرجّع الصورة كاملة بخلفية شفافة (من غير قص) */
 async function aiCut(base, onMsg){
   const m = await loadImgly();
   const rb = m.removeBackground || m.default;
   const small = scaledCanvas(base, 1024);
-  const inBlob = await toBlob(small, 'image/jpeg', 0.85);
+  const inBlob = await toBlob(small, 'image/jpeg', 0.9);
   let outBlob;
   const useGpu = !!navigator.gpu && !ai.noGpu;
   try {
@@ -697,13 +693,11 @@ async function aiCut(base, onMsg){
   x.drawImage(base, 0, 0);
   x.globalCompositeOperation = 'destination-in';
   x.drawImage(mimg, 0, 0, base.width, base.height);
-  x.globalCompositeOperation = 'source-over';
-  hardenAlpha(full);
-  return full;
+  return cropToAlpha(full);
 }
 function setPill(){
   const p = $('aiPill');
-  if (settings.mode !== 'ai'){ p.hidden = true; return; }
+  if (settings.mode === 'fast'){ p.hidden = true; return; }
   p.hidden = false;
   p.className = 'pill';
   if (ai.state === 'loading'){
@@ -712,65 +706,69 @@ function setPill(){
   } else if (ai.state === 'ready'){
     p.className = 'pill ok'; p.textContent = 'الذكاء الاصطناعي جاهز ✓';
   } else if (ai.state === 'error'){
-    p.className = 'pill err'; p.textContent = 'محتاج نت لتجهيز الذكاء الاصطناعي. الوضع السريع شغال.';
+    p.className = 'pill err'; p.textContent = 'محتاج نت لتجهيز الذكاء الاصطناعي. القص السريع شغال.';
   } else {
     p.textContent = 'هيتجهّز تلقائياً';
   }
 }
+const MODE_HINTS = {
+  auto: 'لحظي لو الخلفية سادة. ولو الصورة معقدة بيستخدم الذكاء الاصطناعي لوحده.',
+  ai: 'ذكاء اصطناعي دايماً: أدق مع الخلفيات المعقدة، لكن أبطأ شوية.',
+  fast: 'لحظي دايماً وبدون نت. الأفضل مع سطح سادة تحت المنتج.'
+};
 function setMode(m, reprocess){
   settings.mode = m;
-  try { localStorage.setItem('mode', m); } catch (e){}
+  saveSet('mode2', m);
   document.querySelectorAll('#seg button').forEach(b => b.classList.toggle('on', b.dataset.m === m));
-  $('modeHint').textContent = m === 'ai'
-    ? 'بيشيل أي خلفية بدقة عالية. بعد أول تجهيز بياخد كام ثانية، وإنت بتكتب الباركود في نفس الوقت.'
-    : 'لحظي وبدون نت. الأفضل تحط المنتج على ورقة بيضاء أو سطح سادة.';
-  if (m === 'ai') warmup();
+  $('modeHint').textContent = MODE_HINTS[m];
+  if (m !== 'fast') setTimeout(warmup, m === 'ai' ? 0 : 4000);
   setPill();
   if (reprocess && ST.base) processPhoto();
 }
 
 /* ================= معالجة الصورة ================= */
-async function processPhoto(){
+async function processPhoto(force){
   const my = ++job;
-  const mode = settings.mode;
-  if (ST.edit) leaveEditUI();
-  ST.full = null; ST.box = null; ST.undo = []; ST.ready = false;
-  $('light').disabled = true; $('enh').disabled = true;
+  const mode = force || settings.mode;
+  ST.cut = null; ST.ready = false;
+  $('light').disabled = true;
   updateSaveBtn();
   showOriginal();
-  setProc(true, mode === 'ai' ? 'جاري تنضيف الخلفية…' : 'جاري التنضيف…');
+  setProc(true, mode === 'ai' ? 'جاري تنضيف الخلفية…' : 'جاري القص…');
   await sleep(30);
   if (my !== job) return;
   try {
-    let full = null;
-    if (mode === 'fast'){
-      full = flatten(ST.base);
-    } else {
+    let cut = null;
+    if (mode !== 'ai'){
+      const r = fastCut(ST.base);
+      if (r.ok || mode === 'fast') cut = r.cut;
+      else setProc(true, 'الخلفية معقدة، بنستخدم الذكاء الاصطناعي…');
+    }
+    if (!cut && mode !== 'fast'){
       try {
-        full = await aiCut(ST.base, msg => { if (my === job) setProc(true, msg); });
-        if (my !== job) return;
-        if (!full || !alphaBox(full)) throw new Error('no subject');
+        cut = await aiCut(ST.base, msg => { if (my === job) setProc(true, msg); });
       } catch (e){
         console.warn(e);
         if (my !== job) return;
-        full = flatten(ST.base);
-        toast('الذكاء الاصطناعي مش متاح دلوقتي. استخدمت الوضع السريع.', true);
+        cut = fastCut(ST.base).cut;
+        if (cut) toast('الذكاء الاصطناعي مش متاح دلوقتي. استخدمت القص السريع.', true);
       }
     }
     if (my !== job) return;
-    ST.full = full;
-    ST.box = alphaBox(full) || fullBox(full);
-    ST.boxAuto = true;
+    if (!cut){
+      cut = ST.base;
+      toast('ماقدرتش أحدد المنتج. جرّب خلفية سادة أو وضع «دقيق».', true);
+    }
+    ST.cut = cut;
     ST.ready = true;
-    $('light').disabled = false; $('enh').disabled = false;
+    $('light').disabled = false;
     render();
   } finally {
     if (my === job){ setProc(false); updateSaveBtn(); }
   }
 }
-function startEdit(base, fromCam){
-  ST.base = base; ST.orig = base; ST.full = null; ST.box = null; ST.ready = false; ST.fromCam = !!fromCam;
-  leaveEditUI();
+function startEdit(base){
+  ST.base = base; ST.orig = base; ST.cut = null; ST.flat = null; ST.ready = false;
   $('editor').hidden = false; $('bcCard').hidden = false; $('saveBar').hidden = false;
   $('bc').value = '';
   $('light').value = 0; $('lightVal').textContent = 'تلقائي';
@@ -780,8 +778,7 @@ function startEdit(base, fromCam){
 }
 function resetEditor(){
   job++;
-  leaveEditUI();
-  ST.base = ST.orig = ST.full = ST.box = null; ST.ready = false; ST.undo = [];
+  ST.base = ST.orig = ST.cut = ST.flat = null; ST.ready = false;
   $('editor').hidden = true; $('bcCard').hidden = true; $('saveBar').hidden = true;
   setProc(false);
   window.scrollTo({ top:0, behavior:'smooth' });
@@ -790,168 +787,15 @@ async function handleFile(file){
   if (!file) return;
   try {
     const img = await loadImage(file);
-    let c = scaledCanvas(img, 2000);
+    let c = scaledCanvas(img, 2400);
     const cropped = autoCrop(c);
     if (cropped) c = cropped;
-    c = scaledCanvas(c, 1400);
-    startEdit(c, false);
+    c = scaledCanvas(c, 1600);
+    startEdit(c);
   } catch (e){
     console.error(e);
     toast('تعذر قراءة الصورة', true);
   }
-}
-
-/* ================= تعديل يدوي: قص + رجّع + امسح ================= */
-function edGeom(){
-  const out = $('out'), r = out.getBoundingClientRect(), s = $('stage').getBoundingClientRect();
-  const k = Math.min(r.width / out.width, r.height / out.height);
-  const ox = r.left + (r.width - out.width * k) / 2, oy = r.top + (r.height - out.height * k) / 2;
-  return { k, ox, oy, sx:ox - s.left, sy:oy - s.top };
-}
-function edPt(e){
-  const g = edGeom();
-  return { x:(e.clientX - g.ox) / g.k - ED.M, y:(e.clientY - g.oy) / g.k - ED.M, k:g.k };
-}
-function drawEdit(){
-  const W = ST.full.width, H = ST.full.height, M = ED.M, o = $('out');
-  if (o.width !== W + 2 * M || o.height !== H + 2 * M){ o.width = W + 2 * M; o.height = H + 2 * M; }
-  const x = o.getContext('2d');
-  x.clearRect(0, 0, o.width, o.height);
-  x.globalAlpha = 0.3; x.drawImage(ST.base, M, M);
-  x.globalAlpha = 1; x.drawImage(ST.full, M, M);
-}
-function placeCrop(){
-  const el = $('cropBox');
-  if (!ST.edit || ED.tool !== 'crop' || !ST.box){ el.hidden = true; return; }
-  const g = edGeom(), b = ST.box;
-  el.hidden = false;
-  el.style.left = (g.sx + (b.x0 + ED.M) * g.k) + 'px';
-  el.style.top = (g.sy + (b.y0 + ED.M) * g.k) + 'px';
-  el.style.width = ((b.x1 - b.x0) * g.k) + 'px';
-  el.style.height = ((b.y1 - b.y0) * g.k) + 'px';
-}
-const TOOL_HINT = {
-  crop:'اسحب الأركان أو الحواف أو الصندوق كله لتحديد القص.',
-  restore:'ارسم بإصبعك على أي جزء من المنتج اتشال بالغلط وهيرجع من الصورة الأصلية.',
-  erase:'ارسم على أي جزء زيادة (خلفية) عشان يتشال.'
-};
-function setTool(t){
-  ED.tool = t;
-  document.querySelectorAll('#toolSeg button').forEach(b => b.classList.toggle('on', b.dataset.t === t));
-  $('brushRow').hidden = t === 'crop';
-  $('edHint').textContent = TOOL_HINT[t];
-  placeCrop();
-}
-function enterEdit(){
-  if (!ST.ready || !ST.full) return;
-  ST.edit = true;
-  ED.M = Math.round(0.08 * Math.max(ST.full.width, ST.full.height));
-  $('stage').classList.add('editing');
-  $('normalTools').hidden = true; $('editBar').hidden = false;
-  drawEdit();
-  setTool('crop');
-  updateSaveBtn();
-  $('stage').scrollIntoView({ behavior:'smooth', block:'nearest' });
-}
-function leaveEditUI(){
-  ST.edit = false;
-  $('stage').classList.remove('editing');
-  $('normalTools').hidden = false; $('editBar').hidden = true;
-  $('cropBox').hidden = true;
-  ED.drag = null; ED.paint = false;
-}
-function exitEdit(){
-  if (!ST.edit) return;
-  if (ST.boxAuto) ST.box = alphaBox(ST.full) || fullBox(ST.full);
-  leaveEditUI();
-  render();
-  updateSaveBtn();
-}
-function pushUndo(){
-  const c = document.createElement('canvas'); c.width = ST.full.width; c.height = ST.full.height;
-  c.getContext('2d').drawImage(ST.full, 0, 0);
-  ST.undo.push(c);
-  if (ST.undo.length > 8) ST.undo.shift();
-}
-function undoEdit(){
-  const c = ST.undo.pop();
-  if (!c){ toast('مفيش حاجة للتراجع'); return; }
-  const x = ST.full.getContext('2d');
-  x.clearRect(0, 0, ST.full.width, ST.full.height);
-  x.drawImage(c, 0, 0);
-  drawEdit();
-}
-function stamp(cx, cy, rad){
-  const x = ST.full.getContext('2d');
-  x.save();
-  x.beginPath(); x.arc(cx, cy, rad, 0, Math.PI * 2); x.clip();
-  if (ED.tool === 'erase') x.clearRect(cx - rad, cy - rad, rad * 2, rad * 2);
-  else x.drawImage(ST.base, 0, 0);
-  x.restore();
-}
-function strokeTo(p){
-  const rad = (+$('brush').value / 2) / p.k;
-  const step = Math.max(1, rad / 3);
-  if (!ED.last){ stamp(p.x, p.y, rad); }
-  else {
-    const dx = p.x - ED.last.x, dy = p.y - ED.last.y, dist = Math.hypot(dx, dy);
-    const n = Math.max(1, Math.ceil(dist / step));
-    for (let i = 1; i <= n; i++) stamp(ED.last.x + dx * i / n, ED.last.y + dy * i / n, rad);
-  }
-  ED.last = { x:p.x, y:p.y };
-  if (!ED.raf) ED.raf = requestAnimationFrame(() => { ED.raf = 0; drawEdit(); });
-}
-function initEditEvents(){
-  const box = $('cropBox'), stage = $('stage');
-  box.addEventListener('pointerdown', e => {
-    e.preventDefault(); e.stopPropagation();
-    ED.drag = { h:e.target.dataset.h || 'm', p:edPt(e), b:{ ...ST.box } };
-    box.setPointerCapture(e.pointerId);
-  });
-  box.addEventListener('pointermove', e => {
-    if (!ED.drag) return;
-    const p = edPt(e), dx = p.x - ED.drag.p.x, dy = p.y - ED.drag.p.y, b = ED.drag.b, h = ED.drag.h;
-    const W = ST.full.width, H = ST.full.height, mn = 16, nb = { ...b };
-    if (h === 'm'){
-      const bw = b.x1 - b.x0, bh = b.y1 - b.y0;
-      nb.x0 = clamp(b.x0 + dx, 0, W - bw); nb.x1 = nb.x0 + bw;
-      nb.y0 = clamp(b.y0 + dy, 0, H - bh); nb.y1 = nb.y0 + bh;
-    } else {
-      if (h.indexOf('l') >= 0) nb.x0 = clamp(b.x0 + dx, 0, b.x1 - mn);
-      if (h.indexOf('r') >= 0) nb.x1 = clamp(b.x1 + dx, b.x0 + mn, W);
-      if (h.indexOf('t') >= 0) nb.y0 = clamp(b.y0 + dy, 0, b.y1 - mn);
-      if (h.indexOf('b') >= 0) nb.y1 = clamp(b.y1 + dy, b.y0 + mn, H);
-    }
-    ST.box = nb; ST.boxAuto = false;
-    placeCrop();
-  });
-  const endDrag = () => { ED.drag = null; };
-  box.addEventListener('pointerup', endDrag);
-  box.addEventListener('pointercancel', endDrag);
-
-  stage.addEventListener('pointerdown', e => {
-    if (!ST.edit || ED.tool === 'crop') return;
-    e.preventDefault();
-    pushUndo();
-    ED.paint = true; ED.last = null;
-    stage.setPointerCapture(e.pointerId);
-    strokeTo(edPt(e));
-  });
-  stage.addEventListener('pointermove', e => { if (ED.paint) strokeTo(edPt(e)); });
-  const endPaint = () => { ED.paint = false; ED.last = null; };
-  stage.addEventListener('pointerup', endPaint);
-  stage.addEventListener('pointercancel', endPaint);
-
-  document.querySelectorAll('#toolSeg button').forEach(b => { b.onclick = () => setTool(b.dataset.t); });
-  $('btnEdit').onclick = enterEdit;
-  $('btnEditDone').onclick = exitEdit;
-  $('btnUndo').onclick = undoEdit;
-  $('btnAutoBox').onclick = () => {
-    ST.box = alphaBox(ST.full) || fullBox(ST.full); ST.boxAuto = true;
-    setTool('crop');
-  };
-  $('brush').oninput = () => { $('brushVal').textContent = $('brush').value; };
-  window.addEventListener('resize', () => { if (ST.edit) placeCrop(); });
 }
 
 /* ================= الباركود: استخراج الكود ================= */
@@ -960,20 +804,19 @@ function normalizeDigits(s){
     .replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 0x660))
     .replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x6F0));
 }
-/* مثال: C48121-62C  ←  48121  (اللي بعد الحرف C وقبل الشرطة) */
 function extractCode(raw){
   raw = normalizeDigits((raw || '').trim());
-  const first = raw.split(/[-–—]/)[0];
-  return first.replace(/^[^0-9]+/, '').replace(/[^A-Za-z0-9]/g, '');
+  const parts = raw.split(/[-–—]/);
+  const code = parts.length > 1 ? parts.slice(1).join('') : raw;
+  return code.replace(/[^A-Za-z0-9]/g, '');
 }
 function hasDash(raw){ return /[-–—]/.test(raw || ''); }
-function curExt(){ return $('whiteBg').checked ? 'jpg' : 'png'; }
 function uniqueName(code){
-  const ext = curExt();
-  const used = new Set(library.map(i => i.name.replace(/\.[^.]+$/, '')));
-  let n = 1, base = code;
-  while (used.has(base)){ n++; base = code + '_' + n; }
-  return base + '.' + ext;
+  const ext = extNow();
+  const names = new Set(library.map(i => i.name));
+  let n = 1, name = code + '.' + ext;
+  while (names.has(name)){ n++; name = code + '_' + n + '.' + ext; }
+  return name;
 }
 function updateName(){
   const raw = $('bc').value, code = extractCode(raw), el = $('fname');
@@ -986,7 +829,6 @@ function updateSaveBtn(){
   let label, dis = true;
   if (!ST.base) label = '—';
   else if (!ST.ready) label = 'جاري التنضيف… تقدر تكتب الباركود دلوقتي';
-  else if (ST.edit) label = 'دوس «تم» الأول لإنهاء التعديل';
   else if (!code) label = 'اكتب أو امسح الباركود';
   else { label = 'حفظ ' + uniqueName(code); dis = false; }
   $('saveTxt').textContent = label;
@@ -1108,8 +950,7 @@ function onScanned(text){
   $('bc').value = text;
   updateName(); updateSaveBtn();
   if (navigator.vibrate) navigator.vibrate(80);
-  const code = extractCode(text);
-  toast('اتقرا: ' + text + (code ? ' ← الكود: ' + code : ''));
+  toast('اتقرا: ' + text + (hasDash(text) ? '' : ' (من غير شرطة، هيتحفظ بالرقم كله)'));
 }
 async function scanPhoto(file){
   if (!file) return;
@@ -1159,7 +1000,6 @@ async function openCam(){
   $('cam').classList.add('on');
   setCamHint('جاري تشغيل الكاميرا…');
   camBox = null; camMiss = 0; $('camBox').hidden = true;
-  $('camVideo').dataset.fit = '';
   try {
     camStream = await navigator.mediaDevices.getUserMedia(videoConstraints());
   } catch (e){
@@ -1217,10 +1057,10 @@ function shoot(){
   full.width = v.videoWidth; full.height = v.videoHeight;
   full.getContext('2d').drawImage(v, 0, 0);
   let c = full;
-  if (camBox) c = cropCanvas(full, camBox, 0.05);
-  c = scaledCanvas(c, 1400);
+  if (camBox) c = cropCanvas(full, camBox, 0.1);
+  c = scaledCanvas(c, 1600);
   closeCam();
-  startEdit(c, true);
+  startEdit(c);
 }
 
 /* ================= الحفظ والمكتبة ================= */
@@ -1237,15 +1077,13 @@ async function writeToDir(name, blob){
   await w.close();
 }
 async function saveCurrent(){
-  if (!ST.ready || ST.edit) return;
+  if (!ST.ready) return;
   const code = extractCode($('bc').value);
   if (!code){ toast('اكتب الباركود الأول', true); $('bc').focus(); return; }
-  const again = ST.fromCam && $('loopCam').checked;
   let dirOk = false;
   if (dirHandle){ try { dirOk = await hasDirPerm(); } catch (e){ dirOk = false; } }
   $('btnSave').disabled = true;
-  const white = $('whiteBg').checked;
-  const blob = await toBlob(resultCanvas, white ? 'image/jpeg' : 'image/png', 0.93);
+  const blob = await resultBlob();
   const name = uniqueName(code);
   const item = { name, blob, t:Date.now() };
   library.push(item);
@@ -1257,14 +1095,13 @@ async function saveCurrent(){
   renderLibrary();
   toast(wrote ? ('اتحفظ في الفولدر: ' + name) : ('اتحفظ في المكتبة: ' + name));
   resetEditor();
-  if (again) setTimeout(openCam, 350);
 }
 function renderLibrary(){
   libUrls.forEach(u => URL.revokeObjectURL(u)); libUrls = [];
   const g = $('libGrid'); g.innerHTML = '';
   library.slice().reverse().forEach(it => {
     const url = URL.createObjectURL(it.blob); libUrls.push(url);
-    const d = document.createElement('div'); d.className = 'thumb chk';
+    const d = document.createElement('div'); d.className = 'thumb';
     const img = document.createElement('img'); img.alt = ''; img.src = url;
     const sp = document.createElement('span'); sp.textContent = it.name;
     const bt = document.createElement('button'); bt.setAttribute('aria-label', 'حذف');
@@ -1395,13 +1232,26 @@ $('light').oninput = () => {
   $('lightVal').textContent = v === 0 ? 'تلقائي' : (v > 0 ? '+' + v : String(v));
   scheduleRender();
 };
-$('enh').oninput = () => { $('enhVal').textContent = $('enh').value + '%'; scheduleRender(); };
-$('whiteBg').onchange = () => { updateName(); updateSaveBtn(); scheduleRender(); };
+function syncSegs(){
+  document.querySelectorAll('#segBg button').forEach(b => b.classList.toggle('on', b.dataset.v === settings.bg));
+  document.querySelectorAll('#segMargin button').forEach(b => b.classList.toggle('on', b.dataset.v === settings.margin));
+}
+function bindSeg(id, key){
+  document.querySelectorAll('#' + id + ' button').forEach(b => {
+    b.onclick = () => {
+      settings[key] = b.dataset.v; saveSet(key, b.dataset.v);
+      syncSegs(); updateName(); updateSaveBtn();
+      if (ST.ready) render();
+    };
+  });
+}
+bindSeg('segBg', 'bg'); bindSeg('segMargin', 'margin'); syncSegs();
+$('btnRefine').onclick = () => { if (ST.base) processPhoto('ai'); };
 
 const cmp = $('btnCompare');
-cmp.addEventListener('pointerdown', e => { e.preventDefault(); if (ST.edit) return; showOriginal(); });
+cmp.addEventListener('pointerdown', e => { e.preventDefault(); showOriginal(); });
 ['pointerup', 'pointerleave', 'pointercancel'].forEach(ev =>
-  cmp.addEventListener(ev, () => { if (!ST.base || ST.edit) return; if (ST.ready) showCanvas(resultCanvas); else showOriginal(); }));
+  cmp.addEventListener(ev, () => { if (!ST.base) return; if (ST.ready) showResult(); else showOriginal(); }));
 cmp.addEventListener('contextmenu', e => e.preventDefault());
 
 $('bc').oninput = () => { updateName(); updateSaveBtn(); };
@@ -1418,11 +1268,6 @@ $('btnAllFiles').onclick = exportFiles;
 $('btnClear').onclick = clearLibrary;
 $('btnFolder').onclick = pickFolder;
 
-try { $('loopCam').checked = localStorage.getItem('loopCam') !== '0'; } catch (e){}
-$('loopCam').onchange = () => { try { localStorage.setItem('loopCam', $('loopCam').checked ? '1' : '0'); } catch (e){} };
-
-initEditEvents();
-
 document.addEventListener('visibilitychange', () => {
   if (document.hidden){ closeCam(); closeScan(); }
 });
@@ -1437,7 +1282,6 @@ document.addEventListener('visibilitychange', () => {
   renderLibrary();
   updateFolderUI();
   setTimeout(() => {
-    if (settings.mode === 'ai') warmup();
     ensureZX().catch(() => {});
   }, 1200);
 })();
