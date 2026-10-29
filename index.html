@@ -177,8 +177,8 @@
   </section>
 
   <section class="card" id="bcCard" hidden>
-    <div class="sec-t">باركود المنتج (مثال: 38-4521)</div>
-    <input type="text" id="bc" placeholder="38-0000" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <div class="sec-t">باركود المنتج (مثال: C48121-62C)</div>
+    <input type="text" id="bc" placeholder="C00000-00C" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false">
     <div class="row2">
       <button class="btn" id="btnScan"><svg class="ic"><use href="#i-bar"/></svg>امسح بالكاميرا</button>
       <button class="btn" id="btnScanPhoto"><svg class="ic"><use href="#i-cam"/></svg>صوّر الباركود</button>
@@ -805,7 +805,11 @@ function normalizeDigits(s){
     .replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 0x6F0));
 }
 function extractCode(raw){
-  raw = normalizeDigits((raw || '').trim());
+  raw = normalizeDigits((raw || '').trim()).replace(/\s+/g, '');
+  // الشكل الجديد: C48121-62C  ->  48121 (اللي بعد C وقبل الشرطة)
+  const m = raw.match(/^[Cc]([A-Za-z0-9]+)[-–—]/);
+  if (m) return m[1];
+  // الشكل القديم: 38-4521  ->  4521 (اللي بعد الشرطة)
   const parts = raw.split(/[-–—]/);
   const code = parts.length > 1 ? parts.slice(1).join('') : raw;
   return code.replace(/[^A-Za-z0-9]/g, '');
@@ -950,7 +954,7 @@ function onScanned(text){
   $('bc').value = text;
   updateName(); updateSaveBtn();
   if (navigator.vibrate) navigator.vibrate(80);
-  toast('اتقرا: ' + text + (hasDash(text) ? '' : ' (من غير شرطة، هيتحفظ بالرقم كله)'));
+  toast('اتقرا: ' + text + ' ← كود المنتج: ' + (extractCode(text) || '؟'));
 }
 async function scanPhoto(file){
   if (!file) return;
